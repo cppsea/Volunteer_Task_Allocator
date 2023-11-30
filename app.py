@@ -13,23 +13,24 @@ class Volunteer(db.Model):
     name = db.Column(db.String, primary_key=True)
     taskAssigned= db.Column(db.String(200), nullable=False)
 
-@app.route("/index")
+@app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route('/getTask')
+@app.route('/getTask', methods = ['POST', 'GET'])
 def getTask():
-    if tasks:
-        randomTask = random.choice[tasks]
-        db.session.add(randomTask)
-        db.session.commit()
-        return randomTask
-    if not tasks:
-        return "No tasks left to do"
+    if request.method == 'POST':
+        if tasks:
+            volunteerName = request.form['name'] #will have to pass in name in index html 26:50 in video
+            randomTask = Volunteer(name = volunteerName, taskAssigned=random.choice[tasks]) #add name and random task to database
+            tasks.remove(randomTask) #delete the task so it won't be picked again
+            db.session.add(randomTask)
+            db.session.commit()
+        if not tasks:
+            return "No tasks left to do"
+    else 
+        volunteers= Volunteer.query.all()
+        return render_template("index.html", volunteers=volunteers) #return to homepage to display the volunteers. 
     
-@app.route('/completeTask/<string:name>', methods = ['POST'])
-def completeTask(task):
-    if (request.method == 'POST'):
-        completedTask= Volunteer.query.filter_by(name=task).first()
 
     
