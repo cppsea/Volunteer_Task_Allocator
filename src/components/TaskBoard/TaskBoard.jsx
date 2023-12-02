@@ -23,7 +23,8 @@ export default function TaskBoard({ tasks }) {
 
       <div className="taskboard-tasklist">
         {tasks.map((task) => (
-          <TaskBoardItem {...task} />
+          //change key to something more appropriate later
+          <TaskBoardItem key={task.task + task.name} {...task} />
         ))}
       </div>
     </div>

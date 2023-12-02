@@ -8,9 +8,9 @@
   flex-direction: column;
   background-color: var(--taskboard-background);
   border-radius: 1rem;
-  
+  width: 90%;
+  max-width: 1300px;
 }
-
 
 .taskboard-header-container {
   display: grid;
@@ -23,7 +23,6 @@
 }
 
 .taskboard-header {
-  
 }
 
 .taskboard-header-text {
@@ -32,10 +31,8 @@
   text-decoration: underline;
 }
 
-
-
-.taskboard-tasklist{
-    padding: 1rem 2rem;
-    display: flex;
-    flex-flow: column nowrap;
+.taskboard-tasklist {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-flow: column nowrap;
 }
