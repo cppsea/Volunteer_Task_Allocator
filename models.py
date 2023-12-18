@@ -13,7 +13,8 @@ def load_user(id):
 # User table for database
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), index=True, unique=True)
+    # note: username = Full Name
+    username = db.Column(db.String(100), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(120))
     password_hash = db.Column(db.String(120))
@@ -26,3 +27,18 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Task(db.Model):
+    task = db.Column(db.String(100))
+    shift = db.Column(db.String(30))
+    date = db.Column(db.DateTime, default=datetime.now)
+
+    def __init__(self, task, shift):
+        self.task = task
+        self.shift = shift
+    
+    def get_task(self, task):
+        return self.task
+
+    def get_shift(self, shift):
+        return self.shift
