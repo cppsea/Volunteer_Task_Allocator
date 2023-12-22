@@ -4,22 +4,6 @@ import { useState} from 'react';
 //import Button from "./Button";
 import NameForm from "./LoginForm";
 
-function Front() {
-  
-  
-  
-  const [type, setType] = useState("signIn");
-  const handleOnClick = text => {
-    if (text !== type) {
-      setType(text);
-      return;
-    }
-  };
-  const containerClass =
-    "container " + (type === "signUp" ? "right-panel-active" : "");
-  
-  
-  
 return (
 
   <div className="Front">
@@ -33,15 +17,6 @@ return (
               <p>
                 To login, please enter the listed information.
               </p>
-              <button
-                className="ghost"
-                id="signIn"
-                onClick={() => handleOnClick("signIn")}
-              >
-                Log In
-              </button>
-            </div>
-            <div className="overlay-panel overlay-right">
               <h1>Hello, Volunteer!</h1>
               <p>Enter your personal details and get your task!</p>
             </div>
