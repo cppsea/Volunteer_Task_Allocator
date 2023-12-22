@@ -12,9 +12,7 @@ return (
         <NameForm/>
         
               <h1>Welcome Back!</h1>
-              <p>
-                To login, please enter the listed information.
-              </p>
+              <p> To login, please enter the listed information.</p>
               <h1>Hello, Volunteer!</h1>
               <p>Enter your personal details and get your task!</p>
             </div>
@@ -26,6 +24,4 @@ return (
       
    
   );
-  }
-
 export default Front;
