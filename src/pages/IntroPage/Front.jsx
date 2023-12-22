@@ -6,13 +6,11 @@ import NameForm from "./LoginForm";
 
 return (
 
-  <div className="Front">
+ 
       <h2>VTA CONCEPT</h2>
-      <div className={containerClass} id="container">
+     
         <NameForm />
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-left">
+        
               <h1>Welcome Back!</h1>
               <p>
                 To login, please enter the listed information.
