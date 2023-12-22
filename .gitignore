@@ -6,3 +6,4 @@ myenv
 static
 templates
 instance
+__pycache__
