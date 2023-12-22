@@ -1,7 +1,4 @@
-
-//import Axios from 'axios';
 import { useState} from 'react';
-//import Button from "./Button";
 import NameForm from "./LoginForm";
 import "./body.css";
 function Front() {
