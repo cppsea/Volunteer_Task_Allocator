@@ -1,8 +1,9 @@
-import { useState} from 'react';
-import NameForm from "./LoginForm";
-import "./body.css";
-function Front() {
 
+import { useState} from 'react';
+import NameForm from "./Name";
+
+function Front() {
+  
   
   
   const [type, setType] = useState("signIn");
@@ -18,6 +19,7 @@ function Front() {
   
   
 return (
+
   <div className="Front">
       <h2>VTA CONCEPT</h2>
       <div className={containerClass} id="container">
@@ -44,9 +46,11 @@ return (
           </div>
         </div>
       </div>
+
     </div>
       
    
   );
   }
+
 export default Front;
