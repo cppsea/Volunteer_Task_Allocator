@@ -1,16 +1,20 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import app, db, login_manager
+from flask_login import LoginManager
 from flask_login import UserMixin
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
-from flask_rbac import RBAC
+# from flask_rbac import RBAC
 
 # with app.app_context():
 #     db.create_all()
 
 # RBAC (role-based access control)
 # currently not being used, will implement it next
-rbac = RBAC(app)
+# rbac = RBAC(app)
+
+db = SQLAlchemy()
+login_manager = LoginManager()
 
 # keeps track of current user
 @login_manager.user_loader
@@ -54,14 +58,13 @@ def validate_password(self, key, value):
 
 # separate table for tasks, shifts, and dates
 class Task(db.Model):
-    task = db.Column(db.String(100))
+    task = db.Column(db.String(100), primary_key=True)
     shift = db.Column(db.String(30))
     date = db.Column(db.DateTime, default=datetime.now)
-
     def __init__(self, task, shift):
         self.task = task
         self.shift = shift
-    
+
     def get_task(self, task):
         return self.task
 

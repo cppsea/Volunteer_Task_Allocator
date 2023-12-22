@@ -1,13 +1,15 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from os import environ
+from models import db
+# from os import environ
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "my secret"
 
-db = SQLAlchemy(app)
+# with app.app_context():
+#     db.init_app(app)
+#     db.app = app
+#     db.create_all()
 
-login_manager = LoginManager(app)
+import routes

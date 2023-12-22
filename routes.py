@@ -1,4 +1,4 @@
-from app import app, db
+from app import app
 from flask import (
     request,
     render_template,
@@ -8,15 +8,13 @@ from flask import (
     get_flashed_messages,
 )
 from models import User
-from werkzeug.urls import url_parse
+# from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 
-
 # index page
-@app.route("/index")
+@app.route('/')
 def index():
     return render_template("index.html")
-
 
 # user page
 @app.route("/user/<username>", methods=["GET", "POST"])

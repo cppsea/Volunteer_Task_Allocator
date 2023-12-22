@@ -3,3 +3,5 @@ app-example.py
 models-example.py
 env
 myenv
+static
+templates
