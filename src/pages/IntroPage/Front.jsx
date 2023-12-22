@@ -9,7 +9,7 @@ return (
  
       <h2>VTA CONCEPT</h2>
      
-        <NameForm />
+        <NameForm/>
         
               <h1>Welcome Back!</h1>
               <p>
