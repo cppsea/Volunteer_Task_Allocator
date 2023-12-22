@@ -2,7 +2,7 @@
 //import Axios from 'axios';
 import { useState} from 'react';
 //import Button from "./Button";
-import NameForm from "./LoginForm";
+import NameForm from "../../components/forms-LoginForm/LoginForm";
 
 function Front() {
   
