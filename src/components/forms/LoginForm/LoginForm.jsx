@@ -2,7 +2,7 @@ import React from "react";
 import "./LoginForm.css";
 import "./InputContainers.css";
 
-function NameForm() {
+function LoginForm() {
   const [state, setState] = React.useState({
     name: "",
     password: ""
@@ -60,4 +60,4 @@ function NameForm() {
   );
 }
 
-export default NameForm;
+export default LoginForm;
