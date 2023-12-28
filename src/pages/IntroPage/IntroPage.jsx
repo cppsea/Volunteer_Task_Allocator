@@ -1,5 +1,5 @@
 import { useState} from 'react';
-import NameForm from "../../components/forms/LoginForm/LoginForm";
+import LoginForm from "../../components/forms/LoginForm/LoginForm";
 import "./IntroPage.css";
 function IntroPage() {
 
@@ -21,7 +21,7 @@ return (
   <div className="IntroPage">
       <h2>VTA CONCEPT</h2>
       <div className={containerClass} id="container">
-        <NameForm />
+        <LoginForm />
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
