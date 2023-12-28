@@ -1,7 +1,7 @@
 import { useState} from 'react';
-import NameForm from "../../components/forms-LoginForm/LoginForm";
+import NameForm from "../../components/forms/LoginForm/LoginForm";
 import "./body.css";
-function Front() {
+function IntroPage() {
 
   
   
@@ -18,7 +18,7 @@ function Front() {
   
   
 return (
-  <div className="Front">
+  <div className="IntroPage">
       <h2>VTA CONCEPT</h2>
       <div className={containerClass} id="container">
         <NameForm />
@@ -49,4 +49,4 @@ return (
    
   );
   }
-export default Front;
+export default IntroPage;
