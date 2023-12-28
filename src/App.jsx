@@ -13,8 +13,8 @@ function App() {
         gap: "20px",
       }}
     >
-      <TaskPage />
-   // <IntroPage />   - kevys.
+      <TaskPage />  
+ {/* <IntroPage /> - kevys.*/}
       
     </div>
   );
