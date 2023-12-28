@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import NameForm from "../../components/forms/LoginForm/LoginForm";
-import "./body.css";
+import "./IntroPage.css";
 function IntroPage() {
 
   
