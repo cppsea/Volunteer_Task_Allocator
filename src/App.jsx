@@ -1,5 +1,6 @@
 import "./css/App.css";
 import TaskPage from "./pages/TaskPage/TaskPage";
+import IntroPage from "./pages/IntroPage/IntroPage";
 function App() {
   return (
     <div
@@ -13,6 +14,8 @@ function App() {
       }}
     >
       <TaskPage />
+   // <IntroPage />   - kevys.
+      
     </div>
   );
 }
