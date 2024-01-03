@@ -1,0 +1,12 @@
+:root {
+
+  --taskboard-item-border: green;
+  --chip-background: rgb(233, 230, 230);
+  --taskboard-background: rgb(99, 202, 99);
+  --taskboard-header-background: green;
+  --card-background: rgb(113, 233, 84);
+  --chip-background: rgb(233, 230, 230);
+
+  /*Intro*/
+  --input-background: #eee;
+}

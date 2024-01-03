@@ -28,7 +28,9 @@
 }
 .person-name {
   display: inline-block;
-  line-height: 1rem;
+  line-height: 1rem;  
+  font-size: calc(0.7rem + 0.2vw);
+
 }
 
 .task-name {
@@ -43,10 +45,10 @@
   gap: 0.8rem;
 }
 
-.task-time {
+.task-time, .time {
   font-size: calc(1rem + 0.1vw);
 }
-
 .time {
   font-weight: 600;
 }
+

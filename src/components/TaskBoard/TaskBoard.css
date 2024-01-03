@@ -1,7 +1,3 @@
-:root {
-  --taskboard-background: rgb(99, 202, 99);
-  --taskboard-header-background: green;
-}
 
 .taskboard {
   display: flex;
