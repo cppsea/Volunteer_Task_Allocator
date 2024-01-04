@@ -18,7 +18,7 @@ def load_user(id):
 class Role(RoleMixin, db.Model):
     __tablename__ = 'roles'
 
-    id = db.Coulmn(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
 
     def __str__(self):
@@ -53,8 +53,8 @@ class User(UserMixin, db.Model):
 class UserRoles(db.Model):
     __tablename__ = "user_roles"
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), primary_key=True)
     
 # checks that username is included
 @validates('username')
