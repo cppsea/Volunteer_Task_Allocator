@@ -14,7 +14,7 @@ login_manager = LoginManager()
 def load_user(id):
     return User.query.get(int(id))
 
-# Role table for role-based access control
+# role table for role-based access control
 class Role(RoleMixin, db.Model):
     __tablename__ = 'roles'
 
