@@ -2,16 +2,9 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_login import UserMixin
+from flask_security import RoleMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
-# from flask_rbac import RBAC
-
-# with app.app_context():
-#     db.create_all()
-
-# RBAC (role-based access control)
-# currently not being used, will implement it next
-# rbac = RBAC(app)
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -21,15 +14,31 @@ login_manager = LoginManager()
 def load_user(id):
     return User.query.get(int(id))
 
+# Role table for role-based access control
+class Role(RoleMixin, db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Coulmn(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False, unique=True)
+
+    def __str__(self):
+        return self.name
 
 # User table for database
 class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     # note: username = Full Name
     username = db.Column(db.String(100), index=True, nullable=False, unique=True)
     email = db.Column(db.String(120), index=True, nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
     password_hash = db.Column(db.String(120))
+
+    roles = db.relationship("Role", secondary="user_roles", backref=db.backref("users", lazy="joined"))
+
+    def __str__(self):
+        return self.email
 
     def __repr__(self):
         return "<User {}>".format(self.username)
@@ -39,6 +48,13 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+# association table between User and Role
+class UserRoles(db.Model):
+    __tablename__ = "user_roles"
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
     
 # checks that username is included
 @validates('username')
