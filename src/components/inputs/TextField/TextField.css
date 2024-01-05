@@ -1,9 +1,0 @@
-.textfield {
-  width: 100%;
-  padding: 10px 15px;
-  border-radius: 15px;
-  border-width: 2px;
-}
-.textfield:focus {
-  border-width: 3px;
-}

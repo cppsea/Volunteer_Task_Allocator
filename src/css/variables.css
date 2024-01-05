@@ -1,12 +1,24 @@
 :root {
+  /*Chip*/
+  --chip-background: rgb(195, 241, 195);
 
-  --taskboard-item-border: green;
-  --chip-background: rgb(233, 230, 230);
-  --taskboard-background: rgb(99, 202, 99);
-  --taskboard-header-background: green;
-  --card-background: rgb(113, 233, 84);
-  --chip-background: rgb(233, 230, 230);
-
-  /*Intro*/
+  /*Task*/
+   --card-background: linear-gradient(to right, #4ee08b, #c9d75a);
+  
+   /*Taskboard*/  
+   --taskboard-item-border: green;
+   --taskboard-background: linear-gradient(to right, #4ee08b, #c9d75a);
+  --taskboard-header-background: linear-gradient(to right, #143f26, #064b08);
+  /*Sign Pages*/
   --input-background: #eee;
+
+  --login-btn-background: #45c474;
+  --login-btn-text: #ffffff;
+
+  --signin-btn-background: #45c474;
+  --signin-btn-text: #ffffff;
+
+  --form-background: #c3e4ae;
+  --form-intro-background: linear-gradient(to right, #4ee08b, #c9d75a);
+  --form-intro-message: #536328;
 }

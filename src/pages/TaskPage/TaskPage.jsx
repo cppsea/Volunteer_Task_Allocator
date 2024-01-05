@@ -2,7 +2,12 @@ import TaskCard from "../../components/Task/TaskCard";
 import TaskBoard from "../../components/TaskBoard/TaskBoard";
 export default function TaskPage() {
   return (
-    <>
+    <div style={{
+      display:"flex",
+      flexDirection:"column",
+      gap:"20px",
+      alignItems:"center"
+    }}>
       <TaskCard
         person_name={"Charlie Brown"}
         task={"Production Line/Restock"}
@@ -31,6 +36,6 @@ export default function TaskPage() {
           },
         ]}
       />
-    </>
+    </div>
   );
 }

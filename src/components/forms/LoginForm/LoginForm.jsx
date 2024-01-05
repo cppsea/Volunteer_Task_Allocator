@@ -1,63 +1,65 @@
 import React from "react";
+import "../forms.css"
 import "./LoginForm.css";
-import "./InputContainers.css";
+import TextInput from "../inputs/TextInputs/TextInput.jsx";
 
 function LoginForm() {
   const [state, setState] = React.useState({
     name: "",
-    password: ""
+    password: "",
   });
-  const handleChange = evt => {
+  const handleChange = (evt) => {
     const value = evt.target.value;
     setState({
       ...state,
-      [evt.target.name]: value
+      [evt.target.name]: value,
     });
   };
 
-  const handleOnSubmit = evt => {
+  const handleOnSubmit = (evt) => {
     evt.preventDefault();
 
     const { name, password } = state;
     alert(`You are logged in with name: ${name} and password: ${password}`);
-    console.log(name,password)
+    console.log(name, password);
     for (const key in state) {
       setState({
         ...state,
-        [key]: ""
+        [key]: "",
       });
     }
   };
 
   return (
-    <div className="form-container sign-in-container">
-      <form onSubmit={handleOnSubmit}>
+      <form onSubmit={handleOnSubmit} className="form login-container">
         <h1>Get Your Task</h1>
-       <div></div>
-        
-        <input
-          type="name"
-          placeholder="Full Name"
-          name="name"
-          value={state.name}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={state.password}
-          onChange={handleChange}
-        />
-       
-        <button >Log In</button>
+
+        <NameInput state={state} onChange={handleChange} />
+
+        <PasswordInput state={state} onChange={handleChange} />
+
+        <button className="login-btn">Log In</button>
       </form>
-
-    </div>
-
-
-
   );
 }
 
+const NameInput = ({ state, onChange }) => (
+  <TextInput
+    type="text"
+    placeholder={"Full Name"}
+    inputName={"name"}
+    value={state.name}
+    onChange={onChange}
+  />
+);
+
+const PasswordInput = ({ state, onChange }) => (
+  <TextInput
+    type="password"
+    placeholder={"Password"}
+    inputName={"password"}
+    value={state.password}
+    onChange={onChange}
+  />
+);
 export default LoginForm;

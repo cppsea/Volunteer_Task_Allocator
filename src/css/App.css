@@ -1,7 +1,21 @@
 @import url("./reset.css");
 
-*{
+/* base styles */
+* {
+    margin: 0;
+    font-family: "Quicksand";
+    color: #000000;
     box-sizing: border-box;
-}
+  }
+  
 
-
+  body {
+    background: #e3f9ea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    height: 100vh;
+    margin: -20px 0 50px;
+  }

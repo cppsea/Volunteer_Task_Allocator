@@ -2,7 +2,7 @@
 .taskboard {
   display: flex;
   flex-direction: column;
-  background-color: var(--taskboard-background);
+  background: var(--taskboard-background);
   border-radius: 1rem;
   width: 90%;
   max-width: 1300px;
@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
   gap: 0.7rem;
-  background-color: var(--taskboard-header-background);
+  background: var(--taskboard-header-background);
   padding: 1rem 2rem;
   border-radius: 1rem 1rem 0 0;
   width: 100%;

@@ -1,12 +1,13 @@
 import "./css/App.css";
 import TaskPage from "./pages/TaskPage/TaskPage";
-import IntroPage from "./pages/IntroPage/IntroPage";
+import LoginPage from "./pages/SignPages/Login/LoginPage";
+import SignUp from "./pages/SignPages/SignUp/SignUpPage";
 function App() {
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
@@ -14,7 +15,8 @@ function App() {
       }}
     >
       <TaskPage />
-      <IntroPage />
+      <LoginPage />
+      <SignUp/>
     </div>
   );
 }
