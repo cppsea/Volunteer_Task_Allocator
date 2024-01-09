@@ -1,9 +1,10 @@
 import SignUpForm from "../../../components/forms/SignUpForm/SignUpForm";
 import "../SignPage.css";
-function SignUp() {
+export default function SignUpPage() {
 
   return (
     <div className="SignPage SignUpPage">
+      <h1 className="page-title">Sign Up</h1>
       <div className="form-container">
         <div className="column">
           <div className="form-intro-container">
@@ -21,5 +22,4 @@ function SignUp() {
       </div>
     </div>
   );
-}
-export default SignUp;
+  }

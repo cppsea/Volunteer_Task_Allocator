@@ -21,4 +21,7 @@
   --form-background: #c3e4ae;
   --form-intro-background: linear-gradient(to right, #4ee08b, #c9d75a);
   --form-intro-message: #536328;
+
+  /*Page*/
+  --page-title-color: rgb(0, 41, 0);
 }

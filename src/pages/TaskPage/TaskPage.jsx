@@ -5,9 +5,11 @@ export default function TaskPage() {
     <div style={{
       display:"flex",
       flexDirection:"column",
+      alignItems:"center",
       gap:"20px",
-      alignItems:"center"
+      width: "100%"
     }}>
+      <h1 className="page-title">Tasks</h1>
       <TaskCard
         person_name={"Charlie Brown"}
         task={"Production Line/Restock"}

@@ -6,6 +6,7 @@
   border-radius: 1rem;
   width: 90%;
   max-width: 1300px;
+  flex-grow:1;
 }
 
 .taskboard-header-container {

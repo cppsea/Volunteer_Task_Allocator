@@ -1,9 +1,10 @@
 import LoginForm from "../../../components/forms/LoginForm/LoginForm";
 import "../SignPage.css";
-function LoginPage() {
+export default function LoginPage() {
 
   return (
     <div className="SignPage LoginPage">
+      <h1 className="page-title">Login</h1>
       <div className="form-container">
         <div className="column">
           <div className="form-intro-container">
@@ -22,4 +23,3 @@ function LoginPage() {
     </div>
   );
 }
-export default LoginPage;
