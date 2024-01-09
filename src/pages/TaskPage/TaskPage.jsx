@@ -7,7 +7,7 @@ export default function TaskPage() {
       flexDirection:"column",
       alignItems:"center",
       gap:"20px",
-      width: "100%"
+      width: "100vw"
     }}>
       <h1 className="page-title">Tasks</h1>
       <TaskCard
