@@ -1,3 +1,5 @@
+instance
+__pycache__
 routes-example.py
 app-example.py
 models-example.py
@@ -5,5 +7,3 @@ env
 myenv
 static
 templates
-instance
-__pycache__
