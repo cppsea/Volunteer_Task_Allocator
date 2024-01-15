@@ -36,6 +36,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(120))
 
     roles = db.relationship("Role", secondary="user_roles", backref=db.backref("users", lazy="joined"))
+    tasks_assigned = db.relationship("Task", backref='assigned_user')
 
     def __str__(self):
         return self.email
@@ -74,9 +75,12 @@ def validate_password(self, key, value):
 
 # separate table for tasks, shifts, and dates
 class Task(db.Model):
-    task = db.Column(db.String(100), primary_key=True)
+    task_id = db.Column(db.Integer, primary_key=True) #in case there are overlapping tasks
+    task = db.Column(db.String(100))
     shift = db.Column(db.String(30))
     date = db.Column(db.DateTime, default=datetime.now)
+    person_assigned = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = True)
+
     def __init__(self, task, shift):
         self.task = task
         self.shift = shift
@@ -86,3 +90,4 @@ class Task(db.Model):
 
     def get_shift(self, shift):
         return self.shift
+    
