@@ -11,16 +11,9 @@ export default function TaskBoard({ tasks }) {
         <div className="taskboard-header">
           <h2 className="taskboard-header-text">Task</h2>
         </div>
-        <div className="taskboard-header">
-          <h2 className="taskboard-header-text">Start Time</h2>
-        </div>
-        <div className="taskboard-header">
-          <h2 className="taskboard-header-text">End Time</h2>
-        </div>
       </div>
 
       {/*Taskboard list */}
-
       <div className="taskboard-tasklist">
         {tasks.map((task) => (
           //change key to something more appropriate later

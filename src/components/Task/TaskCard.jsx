@@ -20,10 +20,12 @@ export default function TaskCard({
       <h2 className="task-name">{task}</h2>
       <div className="task-time-container">
         <h4 className="task-time">
-          Starts At: <span className="time">{TimeToString(startHour, startMinute)}</span>
+          Starts At:
+          <span className="time">{TimeToString(startHour, startMinute)}</span>
         </h4>
         <h4 className="task-time">
-         End At:  <span className="time">{TimeToString(endHour, endMinute)}</span>
+          End At:
+          <span className="time">{TimeToString(endHour, endMinute)}</span>
         </h4>
       </div>
     </div>

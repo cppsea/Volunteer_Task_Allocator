@@ -1,26 +1,25 @@
-
-.taskboard-item{
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr;
-    gap: .7rem;
-    padding: .5rem;
+.taskboard-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  padding: 0.5rem;
 }
 
-.taskboard-item{
-    border-width: 0 1px 1px 1px;
-    border-color: var(--taskboard-item-border);
-    border-style: solid;
+.taskboard-item {
+  border-width: 0 1px 1px 1px;
+  border-color: var(--taskboard-item-border);
+  border-style: solid;
 }
-.taskboard-item > div{    
-    display: flex;
-    border-radius: 1rem;
-    background-color: var(--chip-background);
-    padding: .3rem .4rem;
-    font-weight: 600;
+.taskboard-item > div {
+  display: flex;
+  border-radius: 1rem;
+  background-color: var(--chip-background);
+  padding: 0.3rem 0.4rem;
+  font-weight: 600;
 
-    align-items: center;
+  align-items: center;
 }
 
-.taskboard-item:nth-of-type(1){
-    border-top: 1px solid var(--taskboard-item-border);
+.taskboard-item:nth-of-type(1) {
+  border-top: 1px solid var(--taskboard-item-border);
 }
