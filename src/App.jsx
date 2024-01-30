@@ -5,6 +5,7 @@ import TaskPage from "./pages/TaskPage/TaskPage";
 import SignUpPage from "./pages/SignPages/SignUp/SignUpPage";
 import LoginPage from "./pages/SignPages/Login/LoginPage";
 import AdminLoginPage from "./pages/SignPages/AdminLogin/AdminLogin";
+import AdminTasks from "./pages/AdminPanels/AdminTasks";
 const Links = () => (
   <div
     style={{
@@ -30,6 +31,7 @@ function App() {
         <Route path="admin-login" element={<AdminLoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/task" element={<TaskPage />} />
+        <Route path="/admin-tasks" element={<AdminTasks/>}/>
       </Routes>
     </BrowserRouter>
   );
