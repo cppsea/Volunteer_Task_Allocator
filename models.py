@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(100), index=True, nullable=False, unique=True)
     email = db.Column(db.String(120), index=True, nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
-    password_hash = db.Column(db.String(120))
+    password_hashenc = db.Column(db.String(120))
 
     roles = db.relationship("Role", secondary="user_roles", backref=db.backref("users", lazy="joined"))
     tasks_assigned = db.relationship("Task", backref='assigned_user')
@@ -79,7 +79,7 @@ class Task(db.Model):
     task = db.Column(db.String(100))
     shift = db.Column(db.String(30))
     date = db.Column(db.DateTime, default=datetime.now)
-    person_assigned = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = True)
+    person_assigned = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = True)
 
     def __init__(self, task, shift):
         self.task = task
