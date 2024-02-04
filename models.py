@@ -32,8 +32,8 @@ class User(UserMixin, db.Model):
     # note: username = Full Name
     username = db.Column(db.String(100), index=True, nullable=False, unique=True)
     email = db.Column(db.String(120), index=True, nullable=False, unique=True)
-    password = db.Column(db.String(120), nullable=False)
-    password_hashenc = db.Column(db.String(120))
+    password_hash = db.Column(db.String(120), nullable=False)
+    #password_hashenc = db.Column(db.String(120))
 
     roles = db.relationship("Role", secondary="user_roles", backref=db.backref("users", lazy="joined"))
     tasks_assigned = db.relationship("Task", backref='assigned_user')

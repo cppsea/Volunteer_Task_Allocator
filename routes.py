@@ -22,32 +22,43 @@ def index():
 def user(username):
     user = current_user
     # if current authenticated user tries to visit a user page that's not theirs, redirect them to home page with message
-    if current_user != User.query.filter_by(username=username).first():
-        flash("You are not able to access this user page")
-        redirect(url_for("index"))
-    #otherwise
+    if current_user.username != username:
+        flash("You are not allowed to access this page.")
+        return redirect(url_for('index')) #return was missing, fixed that; now it ensures redirection
+        
+    
 
 from models import Task
 import random
 @app.route("/user/get-random-task", methods = ["GET", "POST"])
 @login_required
 def get_task():
-    random_task = random.choice(Task.query.all())
+    #to avoid assigning the same task to a user multiple times
+    assigned_tasks_ids = [task.id for task in current_user.task_assigned]
+    available_tasks = Task.query.filter(Task.id.notin_(assigned_tasks_ids)).all()
+    
+    if not available_tasks:
+        flash("No more tasks available")
+        return redirect(url_for("index"))
+    
+    random_task = random.choice(available_tasks)
     current_user.tasks_assigned.append(random_task)
 
     db.session.commit()
 
-    return render_template("Your-Tasks.html")
+    return redirect(url_for('index'))
 
 @app.route("/user/finish-task<int:id>", methods = ["GET", "POST"])
 @login_required
 def finished_task(id):
-    task_finished = Task.query.get_or_404(id)
-    try:
-        userIDAssignedToTask= task_finished.person_assigned
-        if (userIDAssignedToTask == current_user.id):  #check if it's this request is from the same person who was assigned the task
-            current_user.tasks_assigned.remove(task_finished)
-            db.session.delete(task_finished)
-            db.session.commit()
-    except:
-        flash("Something wrong deleting")
+    task = Task.query.get_or_404(id)
+    if task.person_assigned == current_user.id:
+        task.completed = True
+        db.session.commit()
+        flash("Task marked as completed.")
+    else:
+        flash("You are not authorized to complete this task.")
+        
+    return redirect(url_for('index'))
+    
+   
