@@ -151,7 +151,7 @@ def user_tasks_and_others():
                 {
                     'id': task.id,
                     'description': task.description,
-                    # Add more task attributes here as needed
+                    
                 }
                 for task in user.tasks_assigned
             ]
