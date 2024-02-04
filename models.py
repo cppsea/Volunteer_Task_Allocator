@@ -36,7 +36,9 @@ class User(UserMixin, db.Model):
     #password_hashenc = db.Column(db.String(120))
 
     roles = db.relationship("Role", secondary="user_roles", backref=db.backref("users", lazy="joined"))
-    tasks_assigned = db.relationship("Task", backref='assigned_user')
+    tasks_assigned = db.relationship("Task", backref='assigned_user') 
+    
+    
 
     def __str__(self):
         return self.email
