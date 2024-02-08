@@ -12,11 +12,15 @@ import random
 # from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 
+# endpoint for users entering login info and logging in using an existing account
 @app.route('/api/login', methods=['POST'])
 def login():
+    # grab email data from login form
     data = request.json
     user = User.query.filter_by(email=data['email']).first()
     
+    # if the user exists and the password is correctly entered, log the user in and return
+    # response containing success message and status as well as username and email of the user for parsing the webpage
     if user and user.check_password(data['password']):
         
         login_user(user)
@@ -34,11 +38,14 @@ def login():
     # if authentication fails, return an error
     return jsonify({'error': 'Invalid email or password'}), 401
 
+# endpoint that assigns task to logged in user upon request
 @app.route("/api/assign-task", methods=["POST"])
 @login_required
 def assign_task():
-    # fetch ids of tasks already assigned to the current user
-    assigned_tasks_ids = [task.id for task in current_user.tasks_assigned]
+    # fetch ids of tasks already assigned to the users
+    all_users = User.query.all()
+    for user in all_users:
+        assigned_tasks_ids = [task.id for task in user.tasks_assigned]
     
     # find tasks that are not assigned to the current user
     available_tasks = Task.query.filter(~Task.id.in_(assigned_tasks_ids)).all()
@@ -47,10 +54,11 @@ def assign_task():
         # no available tasks to assign
         return jsonify({'error': 'No more tasks available'}), 404
     
-    # randomly select a task from the available ones
+    # randomly select a task from the available ones and add to user's assigned tasks
     random_task = random.choice(available_tasks)
     current_user.tasks_assigned.append(random_task)
     db.session.commit()
+
 
     # return details of the assigned task
     return jsonify({
@@ -112,19 +120,35 @@ def admin_users_tasks():
     return jsonify(users_tasks_list), 200
 
 # this route will allow admins to add new tasks to the pool of assignable tasks.
-@app.route('/api/tasks', methods=['GET', 'POST'])
+@app.route('/api/admin/tasks', methods=['GET', 'POST'])
 # @login_required  # ensure this is accessible only by authenticated admins for POST requests
 def manage_tasks():
+    # add task according to form
     if request.method == 'POST':
         data = request.json
         new_task = Task(description=data['description'])
         db.session.add(new_task)
         db.session.commit()
         return jsonify({'success': True, 'message': 'Task added successfully'}), 201
-
+    
+    # view list of all tasks and their description and which user it is assigned to (if assigned to any)
     elif request.method == 'GET':
         tasks = Task.query.all()
+        all_users = User.query().all()
+        # get task description and id and store in list containing each task's info
         tasks_list = [{'id': task.id, 'description': task.description} for task in tasks]
+        for i in range(len(tasks_list)):
+            for user in all_users:
+
+                # if user is assigned the task, add user id to appropriate task's user_assigned_to field in task list
+                if tasks_list[i].id in user.tasks_assigned:
+                    tasks_list[i]['user_assigned_to'] = user.id
+            if tasks_list[i]['user_assigned_to'] == None:
+
+                # else, assign "N/A" to user_assigned_to field
+                tasks_list[i]['user_assigned_to'] = "N/A"
+                
+        # return task list containing each task's info
         return jsonify(tasks_list), 200
 
 # current user's assigned tasks and a list of other users with their tasks
@@ -158,7 +182,7 @@ def user_tasks_and_others():
         }
         for user in other_users_tasks
     ]
-
+    # return list of user and others task
     return jsonify({
         'current_user_tasks': user_tasks_list,
         'other_users_tasks': other_users_tasks_list
