@@ -14,16 +14,6 @@ login_manager = LoginManager()
 def load_user(id):
     return User.query.get(int(id))
 
-# role table for role-based access control
-class Role(RoleMixin, db.Model):
-    __tablename__ = 'roles'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=True)
-
-    def __str__(self):
-        return self.name
-
 # User table for database
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -37,8 +27,6 @@ class User(UserMixin, db.Model):
 
     roles = db.relationship("Role", secondary="user_roles", backref=db.backref("users", lazy="joined"))
     tasks_assigned = db.relationship("Task", backref='assigned_user') 
-    
-    
 
     def __str__(self):
         return self.email
@@ -51,13 +39,6 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
-# association table between User and Role
-class UserRoles(db.Model):
-    __tablename__ = "user_roles"
-
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), primary_key=True)
     
 # checks that username is included
 @validates('username')
@@ -74,6 +55,23 @@ def validate_password(self, key, value):
     if not min <= len(value) <= max:
         raise ValueError("Password must be between " + str(min) + " - " + str(max) + " characters")
     return value
+    
+# role table for role-based access control
+class Role(RoleMixin, db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False, unique=True)
+
+    def __str__(self):
+        return self.name
+    
+# association table between User and Role
+class UserRoles(db.Model):
+    __tablename__ = "user_roles"
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), primary_key=True)
 
 # separate table for tasks, shifts, and dates
 class Task(db.Model):
@@ -92,4 +90,3 @@ class Task(db.Model):
 
     def get_shift(self, shift):
         return self.shift
-    
