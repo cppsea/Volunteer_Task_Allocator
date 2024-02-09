@@ -56,15 +56,14 @@ export default function AdminLoginForm() {
     setErrMessages(currErrMessages);
 
     if (Object.keys(currErrMessages).length === 0) {
-      alert(`You are logged in with name: ${name} and password: ${password}`);
-      navigate("/task");
+      alert(`You are logged in with password: ${password}`);
+      navigate("/admin-tasks");
     }
   };
 
   const navigate = useNavigate();
   return (
     <form onSubmit={handleOnSubmit} className="form">
-      <h1>Admin Login Form</h1>
 
       <PasswordInput
         state={state}

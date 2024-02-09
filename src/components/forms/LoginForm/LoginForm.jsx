@@ -86,6 +86,9 @@ export default function LoginForm() {
       <span style={{ marginTop: "20px" }}>
         Don't have an account? Sign up <Link to={"/signup"}>here</Link>
       </span>
+      <span style={{ marginTop: "20px" }}>
+        Are you an admin? Login <Link to={"/admin-login"}>here</Link>
+      </span>
     </form>
   );
 }

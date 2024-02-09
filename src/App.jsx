@@ -19,6 +19,7 @@ const Links = () => (
     <Link to={"/login"}>Login</Link>
     <Link to={"/signup"}>Signup</Link>
     <Link to={"/admin-login"}>Admin Login</Link>
+    <Link to={"/admin-tasks"}>Admin Tasks</Link>
     <Link to={"/task"}>Task</Link>
   </div>
 );
