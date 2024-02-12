@@ -78,12 +78,14 @@ class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True) #in case there are overlapping tasks
     task = db.Column(db.String(100))
     shift = db.Column(db.String(30))
+    description = db.Column(db.Text)
     date = db.Column(db.DateTime, default=datetime.now)
     person_assigned = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = True)
 
-    def __init__(self, task, shift):
+    def __init__(self, task, shift, description):
         self.task = task
         self.shift = shift
+        self.description = description 
 
     def get_task(self, task):
         return self.task

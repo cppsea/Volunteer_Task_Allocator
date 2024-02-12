@@ -126,7 +126,8 @@ def manage_tasks():
     # add task according to form
     if request.method == 'POST':
         data = request.json
-        new_task = Task(description=data['description'])
+        new_task = Task(task=data.get('task'), shift=data.get('shift'), description=data.get('description'))  # Updated to include 'task', 'shift', and 'description'
+        db.session.add(new_task)
         db.session.add(new_task)
         db.session.commit()
         return jsonify({'success': True, 'message': 'Task added successfully'}), 201
