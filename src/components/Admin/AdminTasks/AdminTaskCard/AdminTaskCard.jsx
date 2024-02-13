@@ -1,6 +1,12 @@
 import "./AdminTaskCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencil, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faPencil,
+  faSquarePlus,
+} from "@fortawesome/free-solid-svg-icons";
+//component for showing task card for admin
+// acccepts task object, and handler for toggling delete state and whether the current card is selected for deletion
 export default function AdminTaskCard({
   task,
   isDeleteSelected,
@@ -20,18 +26,28 @@ export default function AdminTaskCard({
             : task.description
         }`}</p>
         <div className="admin-task-card-actions">
+          {/*If task is being selected for deletion option to unselect it will show, otherwise the option to select it for deletion will show */}
           {isDeleteSelected ? (
-            <span className={`admin-task-card-icon admin-task-card-add icon-active`}>
-              <FontAwesomeIcon icon={faSquarePlus} onClick={toggleDelete(task.id)} />
-            </span>
+            <>
+              {/*Add back current task*/}
+              <span
+                className={`admin-task-card-icon admin-task-card-add icon-active`}
+              >
+                <FontAwesomeIcon icon={faSquarePlus} onClick={toggleDelete} />
+              </span>
+            </>
           ) : (
-            <span
-              className={`admin-task-card-icon admin-task-card-delete icon-active `}
-            >
-              <FontAwesomeIcon icon={faTrash} onClick={toggleDelete(task.id)} />
-            </span>
+            <>
+              {/*Select current task for deletion*/}
+              <span
+                className={`admin-task-card-icon admin-task-card-delete icon-active `}
+              >
+                <FontAwesomeIcon icon={faTrash} onClick={toggleDelete} />
+              </span>
+            </>
           )}
 
+          {/*Edit current task*/}
           <span
             className={`admin-task-card-icon admin-task-card-edit ${
               isDeleteSelected ? "" : "icon-active"

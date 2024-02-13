@@ -36,7 +36,7 @@
 }
 
 /*styling for mouse actions on card action icons*/
-.admin-task-card-icon.icon-active{
+.admin-task-card-icon.icon-active {
   cursor: pointer;
 }
 .admin-task-card-icon.icon-active:active {
@@ -60,7 +60,7 @@
 }
 
 /*add back task icon styling*/
-.admin-task-card-add *{
+.admin-task-card-add * {
   color: rgb(7, 202, 7);
 }
 /*styling for when task card is selected to be deleted*/
@@ -69,8 +69,8 @@
   opacity: 0.4;
   cursor: auto;
 }
-.admin-task-card-icon:not(.icon-active){
-  opacity: .4;
+.admin-task-card-icon:not(.icon-active) {
+  opacity: 0.2;
 }
 
 .delete-selected > .admin-task-card-body {

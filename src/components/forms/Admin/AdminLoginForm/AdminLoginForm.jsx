@@ -1,8 +1,8 @@
 import React from "react";
-import "../forms.css";
+import "../../forms.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import PasswordTextInput from "../inputs/TextInputs/PasswordTextInput.jsx";
+import PasswordTextInput from "../../inputs/TextInputs/PasswordTextInput.jsx";
 
 //Err validation functions
 const isRequired = (input) => input.length > 0 || "This is required.";
@@ -64,7 +64,6 @@ export default function AdminLoginForm() {
   const navigate = useNavigate();
   return (
     <form onSubmit={handleOnSubmit} className="form">
-
       <PasswordInput
         state={state}
         onChange={handleChange}
