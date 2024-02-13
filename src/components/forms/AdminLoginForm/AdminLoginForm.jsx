@@ -57,7 +57,7 @@ export default function AdminLoginForm() {
 
     if (Object.keys(currErrMessages).length === 0) {
       alert(`You are logged in with password: ${password}`);
-      navigate("/admin-tasks");
+      navigate("/admin-user-tasks");
     }
   };
 

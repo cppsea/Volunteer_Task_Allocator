@@ -1,0 +1,78 @@
+/*ADMIN TASK CARD*/
+.admin-task-card {
+  width: 200px;
+  max-width: 200px;
+  height: 150px;
+  max-height: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+/*HEADER OF CARD*/
+.admin-task-card-header {
+  background: var(--admin-task-card-header-background);
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+.admin-task-card-header > h3 {
+  color: var(--admin-task-card-header-text);
+}
+
+/*OVERALL BODY OF CARD*/
+.admin-task-card-body {
+  background: rgba(var(--admin-task-card-body-background));
+  flex-grow: 1;
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+}
+
+/*ACTIONS FOR THE CARD*/
+.admin-task-card-actions {
+  margin-top: 10px;
+  display: flex;
+  column-gap: 20px;
+  font-size: 20px;
+}
+
+/*styling for mouse actions on card action icons*/
+.admin-task-card-icon.icon-active{
+  cursor: pointer;
+}
+.admin-task-card-icon.icon-active:active {
+  position: relative;
+  top: 2px;
+  filter: brightness(0.6);
+}
+
+.admin-task-card-icon.icon-active:hover {
+  opacity: 0.6;
+}
+
+/*delete icon styling*/
+.admin-task-card-delete * {
+  color: red;
+}
+
+/*edit icon styling*/
+.admin-task-card-edit * {
+  color: green;
+}
+
+/*add back task icon styling*/
+.admin-task-card-add *{
+  color: rgb(7, 202, 7);
+}
+/*styling for when task card is selected to be deleted*/
+.delete-selected > .admin-task-card-header,
+.delete-selected p {
+  opacity: 0.4;
+  cursor: auto;
+}
+.admin-task-card-icon:not(.icon-active){
+  opacity: .4;
+}
+
+.delete-selected > .admin-task-card-body {
+  background: rgba(var(--admin-task-card-body-background), 0.5);
+}

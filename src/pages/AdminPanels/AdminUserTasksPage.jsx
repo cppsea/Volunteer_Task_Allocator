@@ -1,4 +1,4 @@
-import AdminTaskBoard from "../../components/AdminTaskBoard/AdminTaskBoard";
+import AdminTaskBoard from "../../components/Admin/AdminTaskBoard/AdminTaskBoard";
 let tasks = [
   {
     name: "Charlie Brown",
@@ -18,7 +18,7 @@ let tasks = [
   },
 ];
 
-export default function AdminTasks() {
+export default function AdminUserTasksPage() {
   return (
     <div
       style={{

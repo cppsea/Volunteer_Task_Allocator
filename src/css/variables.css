@@ -24,4 +24,10 @@
 
   /*Page*/
   --page-title-color: rgb(0, 41, 0);
+
+
+  /*Admin Task Card*/
+  --admin-task-card-header-background: linear-gradient(to right, #143f26, #064b08);
+  --admin-task-card-body-background: 195, 241, 195;
+  --admin-task-card-header-text: #ffffff;
 }
