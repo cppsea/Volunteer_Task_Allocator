@@ -17,14 +17,22 @@ export default function AdminTaskCard({
       className={`admin-task-card ${isDeleteSelected ? "delete-selected" : ""}`}
     >
       <div className={`admin-task-card-header `}>
-        <h3>{task.task}</h3>
+        <div className={`admin-task-card-title`}>
+          <h3>{task.task}</h3>
+        </div>
+        <div className={`admin-task-card-shift`}>
+          <h4>{task.shift}</h4>
+        </div>
       </div>
       <div className={`admin-task-card-body`}>
-        <p>{`${
-          task.description.length > 80
-            ? task.description.slice(0, 80) + "..."
-            : task.description
-        }`}</p>
+        <p className={`admin-task-card-description`}>
+          {/*truncate description if over 80 characters*/}
+          {`${
+            task.description.length > 80
+              ? task.description.slice(0, 80) + "..."
+              : task.description
+          }`}
+        </p>
         <div className="admin-task-card-actions">
           {/*If task is being selected for deletion option to unselect it will show, otherwise the option to select it for deletion will show */}
           {isDeleteSelected ? (

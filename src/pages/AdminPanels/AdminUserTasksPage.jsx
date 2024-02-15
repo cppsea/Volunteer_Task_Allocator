@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AdminTaskBoard from "../../components/Admin/AdminTaskBoard/AdminTaskBoard";
 let tasks = [
   {
@@ -29,8 +30,9 @@ export default function AdminUserTasksPage() {
         width: "100vw",
       }}
     >
-      <h1 className="page-title">Admin: Tasks</h1>
+      <h1 className="page-title">Admin: User Tasks</h1>
       <AdminTaskBoard tasks={tasks} />
+      <Link to={"/admin-tasks"}>Admin: Tasks</Link>
     </div>
   );
 }
