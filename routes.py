@@ -2,6 +2,7 @@ from app import app, db
 from flask import (
     request,
     jsonify,
+    abort,
     render_template,
     flash,
     redirect,
@@ -11,6 +12,8 @@ from models import User, Task
 import random
 # from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
+# can remove if modelview is no longer being used
+from flask_admin import ModelView
 
 # endpoint for users entering login info and logging in using an existing account
 @app.route('/api/login', methods=['POST'])
@@ -24,7 +27,6 @@ def login():
     if user and user.check_password(data['password']):
         
         login_user(user)
-        
         
         return jsonify({
             'success': True, 
@@ -59,7 +61,6 @@ def assign_task():
     current_user.tasks_assigned.append(random_task)
     db.session.commit()
 
-
     # return details of the assigned task
     return jsonify({
         'success': True,
@@ -87,6 +88,13 @@ def register():
 
     return jsonify({'success': True, 'message': 'Registration successful. Please log in.'}), 201
 
+# probably integrate or replace modelview with frontend admin task panel (once ready)
+class MyModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+    
+    def inaccessible_callback(self, name, **kwargs):
+        return jsonify({'error': 'User not authorized'}), 403
 
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
@@ -94,12 +102,20 @@ def admin_login():
     admin_username = "admin"  # Predefined admin username
     admin_password = "password"  # Predefined admin password
 
+    user = User.query.filter_by(roles=data['roles']).first()
+    # maybe find if roles == admin, then continue with flask login
+
     if data.get('username') == admin_username and data.get('password') == admin_password:
         #set up admin session or token-based authentication(?) here
+        login_user(user)
         return jsonify({'success': True, 'message': 'Admin logged in successfully'}), 200
     else:
         return jsonify({'error': 'Invalid admin credentials'}), 401
-
+    
+@app.route('/logout')
+def logout():
+    logout_user()
+    return jsonify({'success': True, 'message': 'Logged out'}, 200)
 
 # this route will provide the admin with a list of users, 
 # the tasks assigned to each user, and the assignment times.
@@ -188,13 +204,3 @@ def user_tasks_and_others():
         'current_user_tasks': user_tasks_list,
         'other_users_tasks': other_users_tasks_list
     }), 200
-
-
-
-    
-
-
-
-
-    
-   
