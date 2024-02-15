@@ -3,25 +3,25 @@ import AdminTasks from "../../components/Admin/AdminTasks/AdminTasks";
 let test_tasks = [
   {
     id: 1,
-    name: "Production Line/Restock",
+    task: "Production Line/Restock",
     description:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque mollitia asperiores voluptas fuga. Quo, aut? Harum inventore dignissimos, voluptatibus iure, non quaerat, ipsa ea sapiente minus voluptatem officiis maiores necessitatibus?",
   },
   {
     id: 2,
-    name: "Supervisor",
+    task: "Supervisor",
     description:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque mollitia asperiores voluptas fuga. Quo, aut? Harum inventore dignissimos, voluptatibus iure, non quaerat, ipsa ea sapiente minus voluptatem officiis maiores necessitatibus?",
   },
   {
     id: 3,
-    name: "Check in ",
+    task: "Check in ",
     description:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque mollitia asperiores voluptas fuga. Quo, aut? Harum inventore dignissimos, voluptatibus iure, non quaerat, ipsa ea sapiente minus voluptatem officiis maiores necessitatibus?",
   },
   {
     id: 4,
-    name: "Media",
+    task: "Media",
     description:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque mollitia asperiores voluptas fuga. Quo, aut? Harum inventore dignissimos, voluptatibus iure, non quaerat, ipsa ea sapiente minus voluptatem officiis maiores necessitatibus?",
   },

@@ -67,6 +67,8 @@ export default function AdminTasks({ tasks, setTasks }) {
       {Object.values(tasksDeleteState).some((ele) => ele) && (
         <DeleteTasksButton deleteTasksHandler={deleteTasksHandler} />
       )}
+
+      
     </>
   );
 }

@@ -17,7 +17,7 @@ export default function AdminTaskCard({
       className={`admin-task-card ${isDeleteSelected ? "delete-selected" : ""}`}
     >
       <div className={`admin-task-card-header `}>
-        <h3>{task.name}</h3>
+        <h3>{task.task}</h3>
       </div>
       <div className={`admin-task-card-body`}>
         <p>{`${
