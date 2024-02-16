@@ -5,8 +5,9 @@ import {
   faPencil,
   faSquarePlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ExpandedAdminTaskCard from "../ExpandedAdminTaskCard/ExpandedAdminTaskCard";
+import Modal from "../../../Modal/Modal";
 //component for showing task card for admin
 // acccepts task object, and handler for toggling delete state and whether the current card is selected for deletion
 export default function AdminTaskCard({
@@ -14,26 +15,21 @@ export default function AdminTaskCard({
   isDeleteSelected,
   toggleDelete,
 }) {
-  //ref  for expanded task card dialog modal
-  let dialogRef = useRef(null);
+  //state for controlling whether expanded task modal is open or not
+  const [expandTaskOpen, setExpandTaskOpen] = useState(false);
 
-  //click handler for opening expanded task card modal
-  const openModalClickHandler = (e) => {
-    //if the clicked on element is inside task card icon, don't trigger modal
-    if (e.target.closest(".admin-task-card-icon")) {
-      e.stopPropagation();
-      return;
-    } else {
-      dialogRef.current.showModal();
-    }
-  };
+  //open handler for expand task modal
+  const openExpandTaskOpen = () => setExpandTaskOpen(true);
+
+  //close expand task modal handler
+  const closeExpandTaskOpen = () => setExpandTaskOpen(false);
   return (
     <>
       <div
         className={`admin-task-card ${
           isDeleteSelected ? "delete-selected" : ""
         }`}
-        onClick={openModalClickHandler}
+        onClick={openExpandTaskOpen}
       >
         <div className={`admin-task-card-header `}>
           <div className={`admin-task-card-title`}>
@@ -86,7 +82,17 @@ export default function AdminTaskCard({
         </div>
       </div>
 
-      <ExpandedAdminTaskCard task={task} dialogRef={dialogRef} />
+      {/*modal for showing expanded task card*/}
+      <Modal
+        isOpen={expandTaskOpen}
+        closeHandler={closeExpandTaskOpen}
+        zIndex={100}
+      >
+        <ExpandedAdminTaskCard
+          task={task}
+          toggleModalHandler={toggleExpandTaskOpen}
+        />
+      </Modal>
     </>
   );
 }

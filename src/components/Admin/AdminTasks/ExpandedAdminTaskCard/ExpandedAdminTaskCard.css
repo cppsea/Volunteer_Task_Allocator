@@ -2,22 +2,6 @@
   --task-border-radius: 20px;
 }
 
-/*dialog element*/
-.expanded-admin-task-dialog {
-  width: 80%;
-  max-width: 700px;
-  min-width: 200px;
-  margin: auto;
-  padding: 0;
-  overflow: visible;
-  border-radius: var(--task-border-radius);
-  border: 1px solid black;
-}
-
-/*backdrop styling*/
-.expanded-admin-task-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.75);
-}
 
 /*Overall Expanded Task*/
 .expanded-admin-task {
@@ -27,6 +11,13 @@
   border-radius: var(--task-border-radius);
   background-color: rgba(var(--admin-task-card-body-background));
   padding-bottom: 10px;
+
+  width: 80%;
+  max-width: 700px;
+  min-width: 200px;
+  margin: auto;
+  padding: 0;
+  border-radius: var(--task-border-radius);
 }
 
 /*Header of Expanded Task*/
