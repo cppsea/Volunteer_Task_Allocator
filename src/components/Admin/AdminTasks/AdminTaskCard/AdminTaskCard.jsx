@@ -90,7 +90,7 @@ export default function AdminTaskCard({
       >
         <ExpandedAdminTaskCard
           task={task}
-          toggleModalHandler={toggleExpandTaskOpen}
+          toggleModalHandler={openExpandTaskOpen}
         />
       </Modal>
     </>
