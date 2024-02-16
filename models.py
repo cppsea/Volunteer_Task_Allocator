@@ -34,7 +34,11 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
+    # if length and character requirement is met, set password. If not, raise error (to be handled in routes)
     def set_password(self, password):
+        min = 6
+        if not min <= len(password):
+            raise ValueError(f"Password must have at least {min} characters")
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
@@ -45,15 +49,6 @@ class User(UserMixin, db.Model):
 def validate_username(self, key, value):
     if not value:
         raise ValueError("Must include username")
-    return value
-
-# checks that password is in a specific range of characters
-@validates('password')
-def validate_password(self, key, value):
-    min = 6
-    max = 32
-    if not min <= len(value) <= max:
-        raise ValueError("Password must be between " + str(min) + " - " + str(max) + " characters")
     return value
     
 # role table for role-based access control
