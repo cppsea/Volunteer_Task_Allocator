@@ -1,0 +1,104 @@
+:root {
+  --task-border-radius: 20px;
+}
+
+/*dialog element*/
+.expanded-admin-task-dialog {
+  width: 80%;
+  max-width: 700px;
+  min-width: 200px;
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  border-radius: var(--task-border-radius);
+  border: 1px solid black;
+}
+
+/*backdrop styling*/
+.expanded-admin-task-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/*Overall Expanded Task*/
+.expanded-admin-task {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: var(--task-border-radius);
+  background-color: rgba(var(--admin-task-card-body-background));
+  padding-bottom: 10px;
+}
+
+/*Header of Expanded Task*/
+.expanded-admin-task-header {
+  background: var(--admin-task-card-header-background);
+  border-radius: var(--task-border-radius) var(--task-border-radius) 0 0;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+/*action icons container*/
+.expanded-admin-task-actions {
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+}
+/*general icon styling*/
+.expanded-admin-task-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.expanded-admin-task-icon:hover {
+  opacity: 0.6;
+}
+.expanded-admin-task-icon:not(.expanded-admin-task-dismiss):active {
+  position: relative;
+  top: 2px;
+  filter: brightness(0.6);
+}
+/*Styling for icon that dismisses the modal*/
+.expanded-admin-task-dismiss {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+.expanded-admin-task-icon.expanded-admin-task-dismiss:active {
+  top: 12px;
+  filter: brightness(0.6);
+}
+.expanded-admin-task-dismiss * {
+  color: red !important;
+}
+.expanded-admin-task-header * {
+  color: var(--admin-task-card-header-text);
+}
+
+/*delete icon styling*/
+.expanded-admin-task-delete * {
+  color: red;
+}
+
+/*edit icon styling*/
+.expanded-admin-task-edit * {
+  color: green;
+}
+
+/*Container for each Field, containing field name and value*/
+.expanded-admin-task-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+/*Field name styling*/
+.expanded-admin-task-field-container > h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+/*Field value styling*/
+.expanded-admin-task-field-container > h4 {
+  font-weight: 600;
+}

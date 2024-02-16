@@ -8,6 +8,16 @@
   flex-direction: column;
 }
 
+.admin-task-card:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.admin-task-card:active {
+  position: relative;
+  top: 2px;
+}
+
 /*HEADER OF CARD*/
 .admin-task-card-header {
   background: var(--admin-task-card-header-background);
