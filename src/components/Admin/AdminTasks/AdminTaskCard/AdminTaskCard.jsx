@@ -23,13 +23,26 @@ export default function AdminTaskCard({
 
   //close expand task modal handler
   const closeExpandTaskOpen = () => setExpandTaskOpen(false);
+
+  //handler for clicking on card to expand task,
+  //need to make it not expand when we're clicking on icons
+  const expandTaskClickHandler = (e) => {
+    e.stopPropagation();
+
+    if (e.target.closest(".admin-task-card-icon")) {
+      return;
+    } else {
+      openExpandTaskOpen();
+    }
+  };
+
   return (
     <>
       <div
         className={`admin-task-card ${
           isDeleteSelected ? "delete-selected" : ""
         }`}
-        onClick={openExpandTaskOpen}
+        onClick={expandTaskClickHandler}
       >
         <div className={`admin-task-card-header `}>
           <div className={`admin-task-card-title`}>
@@ -90,7 +103,7 @@ export default function AdminTaskCard({
       >
         <ExpandedAdminTaskCard
           task={task}
-          toggleModalHandler={openExpandTaskOpen}
+          closeModalHandler={closeExpandTaskOpen}
         />
       </Modal>
     </>
