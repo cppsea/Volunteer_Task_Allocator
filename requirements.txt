@@ -1,4 +1,4 @@
-Babel==2.14.0 # (NOT DIRECTLY USED) integrated collection of utilities that assist in internationalizing and localizing (adapting to support various configurations) the web app
+﻿Babel==2.14.0 # (NOT DIRECTLY USED) integrated collection of utilities that assist in internationalizing and localizing (adapting to support various configurations) the web app
 blinker==1.7.0 # (NOT DIRECTLY USED) provides a fast dispatching system that allows any number of interested parties to subscribe to events, or “signals”. signalling for Python objects
 click==8.1.7 # (NOT DIRECTLY USED) used for creating command line interfacing when running the Flask application
 colorama==0.4.6 # (NOT DIRECTLY USED) Makes ANSI escape character sequences (for producing colored terminal text and cursor positioning) work under MS Windows.
