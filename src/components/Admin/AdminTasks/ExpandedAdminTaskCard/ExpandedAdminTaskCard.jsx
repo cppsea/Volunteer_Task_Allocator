@@ -58,24 +58,24 @@ export default function ExpandedAdminTaskCard({ task, closeModalHandler }) {
             <FontAwesomeIcon icon={faPencil} />
           </span>
         </div>
-      </div>
-      {/*test modal*/}
-      <Modal
-        isOpen={deleteConfirmModalOpen}
-        closeHandler={closeDeleteConfirmModalOpen}
-        zIndex={101}
-      >
-        <div
-          style={{
-            height: "200px",
-            width: "200px",
-            background: "blue",
-          }}
-          className="modal"
+        <Modal
+          id={"delete-confirmation-modal-overlay"}
+          isOpen={deleteConfirmModalOpen}
+          closeHandler={closeDeleteConfirmModalOpen}
+          zIndex={101}
         >
-          Are you sure you want to delete?
-        </div>
-      </Modal>
+          <div
+            style={{
+              height: "200px",
+              width: "200px",
+              background: "blue",
+            }}
+            className="modal"
+          >
+            Are you sure you want to delete?
+          </div>
+        </Modal>
+      </div>
     </>
   );
 }

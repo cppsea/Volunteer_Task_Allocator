@@ -97,6 +97,7 @@ export default function AdminTaskCard({
 
       {/*modal for showing expanded task card*/}
       <Modal
+        id={"expanded-task-modal-overlay"}
         isOpen={expandTaskOpen}
         closeHandler={closeExpandTaskOpen}
         zIndex={100}
@@ -106,6 +107,7 @@ export default function AdminTaskCard({
           closeModalHandler={closeExpandTaskOpen}
         />
       </Modal>
+      
     </>
   );
 }
