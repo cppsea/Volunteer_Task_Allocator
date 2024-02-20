@@ -4,8 +4,14 @@
 
 import { useState } from "react";
 import AdminTaskCardsContainer from "./AdminTaskCardsContainer/AdminTaskCardsContainer";
+import ProgressModal from "../../ProgressModal/ProgressModal";
 //accepts tasks state and setter function for tasks state
 export default function AdminTasks({ tasks, setTasks }) {
+  //state for if there's an action in progress right now
+  const [inProgress, setInProgress] = useState(false);
+  const startProgress = () => setInProgress(true);
+  const finishProgress = () => setInProgress(false);
+
   //set up the state of whether each task is being selected for deletion or not
   let initTasksDeleteState = {};
   tasks.forEach((task) => {
@@ -19,17 +25,23 @@ export default function AdminTasks({ tasks, setTasks }) {
   const toggleTaskDelete = (id) => () =>
     setTasksDeleteState({ ...tasksDeleteState, [id]: !tasksDeleteState[id] });
 
-  //handler for resetting deletestate with provided tasks
-  const resetTasksDeleteState = (newTasks) => {
-    let newTasksDeleteState = {};
-    newTasks.forEach((task) => {
-      newTasksDeleteState[task.id] = false;
-    });
-    setTasksDeleteState(newTasksDeleteState);
+  //handler for filtering out selected tasks from the delete tasks state
+  const filterDeleteSelectedTasks = () => {
+    let filteredDeleteSelectedTasks = {};
+    for (let key in tasksDeleteState) {
+      if (!tasksDeleteState[key]) {
+        filterDeleteSelectedTasks[key] = false;
+      }
+    }
+
+    setTasksDeleteState(filteredDeleteSelectedTasks);
   };
 
   //handler for gathering up all the selected tasks and deleting them
   const deleteTasksHandler = async () => {
+    //start progress modal
+    startProgress();
+
     //grabs ids of tasks to be deleted
     let tasksToBeDeletedIds = Object.keys(tasksDeleteState).filter(
       (id) => tasksDeleteState[id]
@@ -46,12 +58,35 @@ export default function AdminTasks({ tasks, setTasks }) {
         //set tasks state to these undeleted tasks
         setTasks(undeletedTasks);
 
-        //reset tasks delete state to the new tasks array too
-        resetTasksDeleteState(undeletedTasks);
+        //filter out deleted tasks from tasks delete state
+        filterDeleteSelectedTasks();
 
         resolve();
       }, 3000)
     );
+
+    //close progress modal
+    finishProgress();
+  };
+
+  //handler for deleting single task based on id
+  const deleteTaskHandler = async (id) => {
+    //start progress modal
+    startProgress();
+
+    //simulate tasks being deleted, edit later when backend is up
+    await new Promise((resolve) =>
+      setTimeout(async () => {
+        //filter out tasks that don't have the id
+        let undeletedTasks = tasks.filter((task) => task.id !== id);
+        //set tasks state to these undeleted tasks
+        setTasks(undeletedTasks);
+        resolve();
+      }, 3000)
+    );
+
+    //close progress modal
+    finishProgress();
   };
 
   return (
@@ -61,6 +96,7 @@ export default function AdminTasks({ tasks, setTasks }) {
         tasks={tasks}
         isDeleteSelected={tasksDeleteState}
         toggleDelete={toggleTaskDelete}
+        deleteTaskHandler={deleteTaskHandler}
       />
 
       {/*only show delete button when user has selected tasks for deletion*/}
@@ -68,7 +104,8 @@ export default function AdminTasks({ tasks, setTasks }) {
         <DeleteTasksButton deleteTasksHandler={deleteTasksHandler} />
       )}
 
-      
+      {/*Modal that will stay up while an action is in progress, blocking further user input*/}
+      <ProgressModal isOpen={inProgress} />
     </>
   );
 }

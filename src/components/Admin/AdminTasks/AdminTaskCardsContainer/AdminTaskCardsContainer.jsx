@@ -2,11 +2,12 @@ import AdminTaskCard from "../AdminTaskCard/AdminTaskCard";
 
 //container for the admin task cards
 //accepts array of tasks, delete selected tasks state, handler for toggling delete state of card
-
+//and handler for deleting the current task
 export default function AdminTaskCardsContainer({
   tasks,
   isDeleteSelected,
   toggleDelete,
+  deleteTaskHandler,
 }) {
   return (
     <div
@@ -26,6 +27,7 @@ export default function AdminTaskCardsContainer({
             task={task}
             isDeleteSelected={isDeleteSelected[task.id]}
             toggleDelete={toggleDelete(task.id)}
+            deleteTaskHandler={() => deleteTaskHandler(task.id)}
           />
         );
       })}

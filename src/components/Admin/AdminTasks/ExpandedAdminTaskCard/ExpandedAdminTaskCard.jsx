@@ -2,20 +2,22 @@ import "./ExpandedAdminTaskCard.css";
 import { faX, faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import Modal from "../../../Modal/Modal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
 
 //expanded view of task card
 //accepts task object and close modal handler (for the x button)
-export default function ExpandedAdminTaskCard({ task, closeModalHandler }) {
+export default function ExpandedAdminTaskCard({
+  task,
+  closeModalHandler,
+  deleteTaskHandler,
+}) {
   //state for controlling if delete confirm modal is open
   const [deleteConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
 
   //open and close handlers for delete confirm modal
-  const openDeleteConfirmModalOpen = () => setDeleteConfirmModalOpen(true);
+  const openDeleteConfirmModal = () => setDeleteConfirmModalOpen(true);
 
-  const closeDeleteConfirmModalOpen = () => {
-    setDeleteConfirmModalOpen(false);
-  };
+  const closeDeleteConfirmModal = () => setDeleteConfirmModalOpen(false);
 
   return (
     <>
@@ -48,7 +50,7 @@ export default function ExpandedAdminTaskCard({ task, closeModalHandler }) {
           {/*Delete Task icon, opens up modal that will ask for delete confirmation before deleting*/}
           <span
             className={`expanded-admin-task-icon expanded-admin-task-delete`}
-            onClick={openDeleteConfirmModalOpen}
+            onClick={openDeleteConfirmModal}
           >
             <FontAwesomeIcon icon={faTrash} />
           </span>
@@ -58,24 +60,13 @@ export default function ExpandedAdminTaskCard({ task, closeModalHandler }) {
             <FontAwesomeIcon icon={faPencil} />
           </span>
         </div>
-        <Modal
-          id={"delete-confirmation-modal-overlay"}
-          isOpen={deleteConfirmModalOpen}
-          closeHandler={closeDeleteConfirmModalOpen}
-          zIndex={101}
-        >
-          <div
-            style={{
-              height: "200px",
-              width: "200px",
-              background: "blue",
-            }}
-            className="modal"
-          >
-            Are you sure you want to delete?
-          </div>
-        </Modal>
       </div>
+      <DeleteConfirmationModal
+        deleteConfirmModalOpen={deleteConfirmModalOpen}
+        deleteTaskHandler={deleteTaskHandler}
+        closeExpandedTaskModal={closeModalHandler}
+        closeDeleteConfirmModal={closeDeleteConfirmModal}
+      />
     </>
   );
 }

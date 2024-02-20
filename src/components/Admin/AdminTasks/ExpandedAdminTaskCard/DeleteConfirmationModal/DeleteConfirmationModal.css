@@ -1,0 +1,37 @@
+.task-delete-confirmation-modal {
+  height: 200px;
+  width: 230px;
+  border-radius: 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--confirmation-modal-bg);
+  gap: 40px;
+}
+
+.delete-confirmation-message {
+  text-align: center;
+}
+
+.delete-confirmation-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.delete-confirmation-button {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.confirm {
+  background: var(--confirm-btn-bg);
+}
+
+.deny {
+  background: var(--deny-btn-bg);
+}

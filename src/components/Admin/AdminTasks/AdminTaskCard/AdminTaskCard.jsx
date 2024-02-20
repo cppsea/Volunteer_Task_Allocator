@@ -10,10 +10,13 @@ import ExpandedAdminTaskCard from "../ExpandedAdminTaskCard/ExpandedAdminTaskCar
 import Modal from "../../../Modal/Modal";
 //component for showing task card for admin
 // acccepts task object, and handler for toggling delete state and whether the current card is selected for deletion
+//and handler for deleting the current task
+
 export default function AdminTaskCard({
   task,
   isDeleteSelected,
   toggleDelete,
+  deleteTaskHandler,
 }) {
   //state for controlling whether expanded task modal is open or not
   const [expandTaskOpen, setExpandTaskOpen] = useState(false);
@@ -105,9 +108,9 @@ export default function AdminTaskCard({
         <ExpandedAdminTaskCard
           task={task}
           closeModalHandler={closeExpandTaskOpen}
+          deleteTaskHandler={deleteTaskHandler}
         />
       </Modal>
-      
     </>
   );
 }

@@ -3,11 +3,11 @@
   --chip-background: rgb(195, 241, 195);
 
   /*Task*/
-   --card-background: linear-gradient(to right, #4ee08b, #c9d75a);
-  
-   /*Taskboard*/  
-   --taskboard-item-border: green;
-   --taskboard-background: linear-gradient(to right, #4ee08b, #c9d75a);
+  --card-background: linear-gradient(to right, #4ee08b, #c9d75a);
+
+  /*Taskboard*/
+  --taskboard-item-border: green;
+  --taskboard-background: linear-gradient(to right, #4ee08b, #c9d75a);
   --taskboard-header-background: linear-gradient(to right, #143f26, #064b08);
   /*Sign Pages*/
   --input-background: #eee;
@@ -25,9 +25,20 @@
   /*Page*/
   --page-title-color: rgb(0, 41, 0);
 
-
   /*Admin Task Card*/
-  --admin-task-card-header-background: linear-gradient(to right, #143f26, #064b08);
+  --admin-task-card-header-background: linear-gradient(
+    to right,
+    #143f26,
+    #064b08
+  );
   --admin-task-card-body-background: 195, 241, 195;
   --admin-task-card-header-text: #ffffff;
+
+  /*In Progress Modal*/
+  --progress-modal-bg: rgb(195, 241, 195);
+
+  /*Confirmation Modals*/
+  --confirmation-modal-bg: rgb(195, 241, 195);
+  --confirm-btn-bg: #45c474;
+  --deny-btn-bg: rgb(235, 83, 83);
 }
