@@ -6,6 +6,7 @@
   max-height: 180px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .admin-task-card:hover {
@@ -54,10 +55,11 @@
 }
 /*ACTIONS FOR THE CARD*/
 .admin-task-card-actions {
-  margin-top: 10px;
   display: flex;
   column-gap: 20px;
   font-size: 20px;
+  position: absolute;
+  bottom: 15px;
 }
 
 /*styling for mouse actions on card action icons*/

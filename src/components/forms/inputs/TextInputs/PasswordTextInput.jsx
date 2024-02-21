@@ -8,6 +8,7 @@ export default function PasswordTextInput({
   value,
   onChange,
   error,
+  id,
 }) {
   //controls whether password is visible
   const [isVisible, setVisibility] = useState(false);
@@ -24,6 +25,7 @@ export default function PasswordTextInput({
           name={inputName}
           value={value}
           onChange={onChange}
+          id={id}
         />
         <FontAwesomeIcon
           icon={isVisible ? faEyeSlash : faEye}

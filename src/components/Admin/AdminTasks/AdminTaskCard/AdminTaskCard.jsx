@@ -8,15 +8,17 @@ import {
 import { useState } from "react";
 import ExpandedAdminTaskCard from "../ExpandedAdminTaskCard/ExpandedAdminTaskCard";
 import Modal from "../../../Modal/Modal";
+import AdminEditTaskForm from "../../../forms/Admin/AdminEditTaskForm/AdminEditTaskForm";
 //component for showing task card for admin
 // acccepts task object, and handler for toggling delete state and whether the current card is selected for deletion
-//and handler for deleting the current task
+//and handlers for deleting/editing the current task
 
 export default function AdminTaskCard({
   task,
   isDeleteSelected,
   toggleDelete,
   deleteTaskHandler,
+  editTaskHandler,
 }) {
   //state for controlling whether expanded task modal is open or not
   const [expandTaskOpen, setExpandTaskOpen] = useState(false);
@@ -38,6 +40,11 @@ export default function AdminTaskCard({
       openExpandTaskOpen();
     }
   };
+
+  //state controlling open state of edit task modal, with handlers
+  const [editTaskOpen, setEditTaskOpen] = useState(false);
+  const openEditTask = () => setEditTaskOpen(true);
+  const closeEditTask = () => setEditTaskOpen(false);
 
   return (
     <>
@@ -92,7 +99,7 @@ export default function AdminTaskCard({
                 isDeleteSelected ? "" : "icon-active"
               }`}
             >
-              <FontAwesomeIcon icon={faPencil} />
+              <FontAwesomeIcon icon={faPencil} onClick={openEditTask} />
             </span>
           </div>
         </div>
@@ -109,6 +116,20 @@ export default function AdminTaskCard({
           task={task}
           closeModalHandler={closeExpandTaskOpen}
           deleteTaskHandler={deleteTaskHandler}
+          editTaskHandler={editTaskHandler}
+        />
+      </Modal>
+      {/*Modal for showing edit card form*/}
+      <Modal
+        isOpen={editTaskOpen}
+        id={"admin-edit-task-form-modal-overlay"}
+        closeHandler={closeEditTask}
+        zIndex={100}
+      >
+        <AdminEditTaskForm
+          task={task}
+          closeModalHandler={closeEditTask}
+          editTaskHandler={editTaskHandler}
         />
       </Modal>
     </>

@@ -1,7 +1,6 @@
 import "./TextInput.css";
 
-export default function TextInput({
-  type,
+export default function TextFieldInput({
   placeholder,
   inputName,
   value,
@@ -11,13 +10,13 @@ export default function TextInput({
 }) {
   return (
     <div className="TextInput-container">
-      <input
-        className={`TextInput ${error ? "error" : ""}`}
-        type={type}
+      <textarea
+        className={`TextInput textarea ${error ? "error" : ""}`}
         placeholder={placeholder}
         name={inputName}
         value={value}
         onChange={onChange}
+        rows={3}
         id={id}
       />
       <span className="TextInput-error">{error && error}</span>

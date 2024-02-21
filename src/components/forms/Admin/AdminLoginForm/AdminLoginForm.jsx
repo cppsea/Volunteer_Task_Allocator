@@ -87,5 +87,6 @@ const PasswordInput = ({ state, onChange, error }) => (
     value={state.password}
     onChange={onChange}
     error={error}
+    id={"admin-password-input"}
   />
 );

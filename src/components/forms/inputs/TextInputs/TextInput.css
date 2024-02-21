@@ -1,4 +1,4 @@
-.TextInput-container{
+.TextInput-container {
   display: inline-block;
   width: 100%;
   display: flex;
@@ -14,31 +14,34 @@
   width: 100%;
 }
 
-.error{
+.error {
   border: 1px solid rgb(204, 43, 43);
 }
 
-.error:focus{
+.error:focus {
   outline-color: rgb(204, 43, 43);
- 
 }
 
-.TextInput-error{
-  font-size: .8rem;
-  color:rgb(204, 43, 43);
+.TextInput-error {
+  font-size: 0.8rem;
+  color: rgb(204, 43, 43);
 }
 
-.password{
+.password {
   padding-right: 50px;
 }
 
-.password-visible-icon{
+.password-visible-icon {
   position: absolute;
   top: 50%;
   right: 5px;
   transform: translate(-50%, -50%);
 }
 
-.password-visible-icon:hover{
+.password-visible-icon:hover {
   cursor: pointer;
+}
+
+.textarea {
+  resize: none;
 }

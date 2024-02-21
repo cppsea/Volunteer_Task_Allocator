@@ -41,4 +41,7 @@
   --confirmation-modal-bg: rgb(195, 241, 195);
   --confirm-btn-bg: #45c474;
   --deny-btn-bg: rgb(235, 83, 83);
+
+  /*Edit task modal*/
+  --admin-task-edit-btn-bg: #45c474;
 }

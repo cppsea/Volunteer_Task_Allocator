@@ -5,6 +5,7 @@
 import { useState } from "react";
 import AdminTaskCardsContainer from "./AdminTaskCardsContainer/AdminTaskCardsContainer";
 import ProgressModal from "../../ProgressModal/ProgressModal";
+
 //accepts tasks state and setter function for tasks state
 export default function AdminTasks({ tasks, setTasks }) {
   //state for if there's an action in progress right now
@@ -69,24 +70,56 @@ export default function AdminTasks({ tasks, setTasks }) {
     finishProgress();
   };
 
-  //handler for deleting single task based on id
+  //handler for deleting single task based on id,
+  //returns function to do so
   const deleteTaskHandler = async (id) => {
-    //start progress modal
-    startProgress();
+    return async () => {
+      //start progress modal
+      startProgress();
 
-    //simulate tasks being deleted, edit later when backend is up
-    await new Promise((resolve) =>
-      setTimeout(async () => {
-        //filter out tasks that don't have the id
-        let undeletedTasks = tasks.filter((task) => task.id !== id);
-        //set tasks state to these undeleted tasks
-        setTasks(undeletedTasks);
-        resolve();
-      }, 3000)
-    );
+      //simulate task being deleted, edit later when backend is up
+      await new Promise((resolve) =>
+        setTimeout(async () => {
+          //filter out tasks that don't have the id
+          let undeletedTasks = tasks.filter((task) => task.id !== id);
+          //set tasks state to these undeleted tasks
+          setTasks(undeletedTasks);
+          resolve();
+        }, 3000)
+      );
 
-    //close progress modal
-    finishProgress();
+      //close progress modal
+      finishProgress();
+    };
+  };
+
+  //handler for editing single task based on id
+  //returns a edit function that accepts task data
+  const editTaskHandler = (id) => {
+    return async (taskData) => {
+      //start progress modal
+      startProgress();
+
+      //simulate task being deleted, edit later when backend is up
+      await new Promise((resolve) =>
+        setTimeout(async () => {
+          //find task with id, edit it
+          let tasksCopy = [...tasks];
+          let editTaskIndex = tasksCopy.findIndex((task) => {
+            return task.id === id;
+          });
+
+          if (editTaskIndex > -1) {
+            tasksCopy.splice(editTaskIndex, 1, { id, ...taskData });
+            setTasks(tasksCopy);
+          }
+          resolve();
+        }, 3000)
+      );
+
+      //close progress modal
+      finishProgress();
+    };
   };
 
   return (
@@ -97,6 +130,7 @@ export default function AdminTasks({ tasks, setTasks }) {
         isDeleteSelected={tasksDeleteState}
         toggleDelete={toggleTaskDelete}
         deleteTaskHandler={deleteTaskHandler}
+        editTaskHandler={editTaskHandler}
       />
 
       {/*only show delete button when user has selected tasks for deletion*/}

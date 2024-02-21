@@ -141,6 +141,7 @@ const FirstNameInput = ({ state, onChange, error }) => (
     value={state.first_name}
     onChange={onChange}
     error={error}
+    id={"first-name-input"}
   />
 );
 const LastNameInput = ({ state, onChange, error }) => (
@@ -151,6 +152,7 @@ const LastNameInput = ({ state, onChange, error }) => (
     value={state.last_name}
     onChange={onChange}
     error={error}
+    id={"last-name-input"}
   />
 );
 
@@ -162,6 +164,7 @@ const EmailInput = ({ state, onChange, error }) => (
     value={state.email}
     onChange={onChange}
     error={error}
+    id={"email-input"}
   />
 );
 const PasswordInput = ({ state, onChange, error }) => (
@@ -172,6 +175,7 @@ const PasswordInput = ({ state, onChange, error }) => (
     value={state.password}
     onChange={onChange}
     error={error}
+    id={"password-input"}
   />
 );
 const ConfirmPasswordInput = ({ state, onChange, error }) => (
@@ -182,6 +186,7 @@ const ConfirmPasswordInput = ({ state, onChange, error }) => (
     value={state.confirm_password}
     onChange={onChange}
     error={error}
+    id={"confirm-password-input"}
   />
 );
 export default SignUpForm;

@@ -28,7 +28,7 @@ export default function DeleteConfirmationModal({
     >
       <div style={{}} className="task-delete-confirmation-modal modal">
         <h5 className="delete-confirmation-message">
-          Are you sure you want to delete?
+          Are you sure you want to delete this task?
         </h5>
 
         <div className="delete-confirmation-buttons-container">

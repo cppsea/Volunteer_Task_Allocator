@@ -1,0 +1,80 @@
+/*container for form*/
+.admin-edit-task-form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(var(--admin-task-card-body-background));
+  padding-bottom: 10px;
+
+  width: 80%;
+  max-width: 700px;
+  min-width: 200px;
+  margin: auto;
+  border-radius: 25px;
+}
+
+/*styling for form*/
+.admin-edit-task-form > form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 30px;
+}
+
+/*header of the whole form card*/
+.admin-edit-task-header {
+  background: var(--admin-task-card-header-background);
+  border-radius: 20px 20px 0 0;
+  padding: 10px 30px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+
+/*title inside header*/
+.admin-edit-task-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--admin-task-card-header-text);
+  text-decoration: underline;
+  grid-column: 2/3;
+  text-align: center;
+}
+
+/*label for each input*/
+.admin-edit-task-input-label {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/*general icon styling*/
+.edit-task-form-icon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.edit-task-form-icon:hover {
+  opacity: 0.6;
+}
+
+/*Styling for icon that dismisses the modal*/
+.edit-task-form-icon-dismiss {
+  grid-column: 4;
+}
+
+.edit-task-form-icon.edit-task-form-icon-dismiss:active {
+  top: 12px;
+  filter: brightness(0.6);
+}
+.edit-task-form-icon-dismiss * {
+  color: red;
+}
+
+/*styling for submit button*/
+.edit-task-form-submit {
+  background-color: var(--admin-task-edit-btn-bg);
+  max-width: 100px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}

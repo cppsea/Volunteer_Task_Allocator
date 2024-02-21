@@ -3,21 +3,28 @@ import { faX, faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
+import Modal from "../../../Modal/Modal";
+import AdminEditTaskForm from "../../../forms/Admin/AdminEditTaskForm/AdminEditTaskForm";
 
 //expanded view of task card
 //accepts task object and close modal handler (for the x button)
+//and handlers for deleting/editing the current task
 export default function ExpandedAdminTaskCard({
   task,
   closeModalHandler,
   deleteTaskHandler,
+  editTaskHandler,
 }) {
   //state for controlling if delete confirm modal is open
   const [deleteConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
-
   //open and close handlers for delete confirm modal
   const openDeleteConfirmModal = () => setDeleteConfirmModalOpen(true);
-
   const closeDeleteConfirmModal = () => setDeleteConfirmModalOpen(false);
+
+  //state controlling open state of edit task modal, with handlers
+  const [editTaskOpen, setEditTaskOpen] = useState(false);
+  const openEditTask = () => setEditTaskOpen(true);
+  const closeEditTask = () => setEditTaskOpen(false);
 
   return (
     <>
@@ -56,7 +63,10 @@ export default function ExpandedAdminTaskCard({
           </span>
 
           {/*Edit Task, should open up modal form for deleting*/}
-          <span className={`expanded-admin-task-icon expanded-admin-task-edit`}>
+          <span
+            className={`expanded-admin-task-icon expanded-admin-task-edit`}
+            onClick={openEditTask}
+          >
             <FontAwesomeIcon icon={faPencil} />
           </span>
         </div>
@@ -67,6 +77,20 @@ export default function ExpandedAdminTaskCard({
         closeExpandedTaskModal={closeModalHandler}
         closeDeleteConfirmModal={closeDeleteConfirmModal}
       />
+
+      {/*Modal for showing edit card form*/}
+      <Modal
+        isOpen={editTaskOpen}
+        id={"admin-edit-task-form-modal-overlay"}
+        closeHandler={closeEditTask}
+        zIndex={101}
+      >
+        <AdminEditTaskForm
+          task={task}
+          closeModalHandler={closeEditTask}
+          editTaskHandler={editTaskHandler}
+        />
+      </Modal>
     </>
   );
 }

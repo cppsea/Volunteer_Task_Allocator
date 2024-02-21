@@ -9,6 +9,10 @@
   align-items: center;
   background-color: var(--confirmation-modal-bg);
   gap: 40px;
+  padding: 0 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
 }
 
 .delete-confirmation-message {
