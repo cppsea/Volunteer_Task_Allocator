@@ -14,7 +14,7 @@ export default function Modal({ id, isOpen, closeHandler, children, zIndex }) {
   return isOpen ? (
     <div
       className="modal-overlay"
-      onClick={modalClickHandler(closeHandler, id)}
+      onMouseDown={modalClickOutsideHandler(closeHandler, id)}
       id={id}
       style={{
         zIndex: `${zIndex}`,
@@ -27,10 +27,10 @@ export default function Modal({ id, isOpen, closeHandler, children, zIndex }) {
   );
 }
 
-//handles clicking outside of modal, will close if clicked outside the modal
+//handles clicking outside of modal (ONLY on mousedown), will close if clicked outside the modal
 //if we are clicking on a modal that corresponds to this specific overlay with a specific id, dont close
 //otherwise, close this specific modal
-function modalClickHandler(closeHandler, id) {
+function modalClickOutsideHandler(closeHandler, id) {
   return (e) => {
     e.stopPropagation();
     if (e.target.closest(`#${id} > .modal`)) {
