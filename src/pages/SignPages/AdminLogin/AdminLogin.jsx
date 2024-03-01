@@ -1,5 +1,5 @@
 import "../SignPage.css";
-import AdminLoginForm from "../../../components/forms/AdminLoginForm/AdminLoginForm";
+import AdminLoginForm from "../../../components/forms/Admin/AdminLoginForm/AdminLoginForm";
 export default function AdminLoginPage() {
   return (
     <div className="SignPage AdminLoginPage">

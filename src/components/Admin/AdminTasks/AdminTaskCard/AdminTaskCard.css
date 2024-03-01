@@ -1,0 +1,105 @@
+/*ADMIN TASK CARD*/
+.admin-task-card {
+  width: 200px;
+  max-width: 200px;
+  height: 180px;
+  max-height: 180px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.admin-task-card:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.admin-task-card:active {
+  position: relative;
+  top: 2px;
+}
+
+/*HEADER OF CARD*/
+.admin-task-card-header {
+  background: var(--admin-task-card-header-background);
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+.admin-task-card-header * {
+  color: var(--admin-task-card-header-text);
+}
+
+/*TASK TITLE*/
+.admin-task-card-title > h3 {
+  text-decoration: underline;
+  font-size: 1.1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+/*TASK SHIFT*/
+.admin-task-card-shift {
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+/*OVERALL BODY OF CARD*/
+.admin-task-card-body {
+  background: rgba(var(--admin-task-card-body-background));
+  flex-grow: 1;
+  border-radius: 0 0 5px 5px;
+  padding: 10px 0 10px 10px;
+}
+/*TASK DESCRIPTION*/
+.admin-task-card-description {
+}
+/*ACTIONS FOR THE CARD*/
+.admin-task-card-actions {
+  display: flex;
+  column-gap: 20px;
+  font-size: 20px;
+  position: absolute;
+  bottom: 15px;
+}
+
+/*styling for mouse actions on card action icons*/
+.admin-task-card-icon.icon-active {
+  cursor: pointer;
+}
+.admin-task-card-icon.icon-active:active {
+  position: relative;
+  top: 2px;
+  filter: brightness(0.6);
+}
+
+.admin-task-card-icon.icon-active:hover {
+  opacity: 0.6;
+}
+
+/*delete icon styling*/
+.admin-task-card-delete * {
+  color: red;
+}
+
+/*edit icon styling*/
+.admin-task-card-edit * {
+  color: green;
+}
+
+/*add back task icon styling*/
+.admin-task-card-add * {
+  color: rgb(7, 202, 7);
+}
+/*styling for when task card is selected to be deleted*/
+.delete-selected > .admin-task-card-header,
+.delete-selected p {
+  opacity: 0.4;
+  cursor: auto;
+}
+.admin-task-card-icon:not(.icon-active) {
+  opacity: 0.2;
+}
+
+.delete-selected > .admin-task-card-body {
+  background: rgba(var(--admin-task-card-body-background), 0.5);
+}

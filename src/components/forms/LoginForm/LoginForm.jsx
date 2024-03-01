@@ -101,6 +101,7 @@ const NameInput = ({ state, onChange, error }) => (
     value={state.name}
     onChange={onChange}
     error={error}
+    id={"full-name-input"}
   />
 );
 
@@ -112,5 +113,6 @@ const PasswordInput = ({ state, onChange, error }) => (
     value={state.password}
     onChange={onChange}
     error={error}
+    id={"password-input"}
   />
 );
