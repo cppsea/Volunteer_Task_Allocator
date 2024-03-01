@@ -105,7 +105,7 @@ def admin_login():
     user = User.query.filter_by(roles=data['roles']).first()
     # maybe find if roles == admin, then continue with flask login
 
-    if data.get('username') == admin_username and data.get('password') == admin_password:
+    if  user and user.check_password(data['password']) and (role.name == 'admin' for role in user.roles):
         #set up admin session or token-based authentication(?) here
         login_user(user)
         return jsonify({'success': True, 'message': 'Admin logged in successfully'}), 200
