@@ -5,6 +5,9 @@
 import { useState } from "react";
 import AdminTaskCardsContainer from "./AdminTaskCardsContainer/AdminTaskCardsContainer";
 import ProgressModal from "../../ProgressModal/ProgressModal";
+import ConfirmModal from "./ConfirmModal/ConfirmModal";
+import Modal from "../../Modal/Modal";
+import AdminCreateTaskForm from "../../forms/Admin/AdminCreateTaskForm/AdminCreateTaskForm";
 
 //accepts tasks state and setter function for tasks state
 export default function AdminTasks({ tasks, setTasks }) {
@@ -72,7 +75,7 @@ export default function AdminTasks({ tasks, setTasks }) {
 
   //handler for deleting single task based on id,
   //returns function to do so
-  const deleteTaskHandler = async (id) => {
+  const deleteTaskHandler = (id) => {
     return async () => {
       //start progress modal
       startProgress();
@@ -122,6 +125,57 @@ export default function AdminTasks({ tasks, setTasks }) {
     };
   };
 
+  //temporary task id state just for creating tasks
+  const [taskId, setTaskId] = useState(100);
+  const incTaskId = () => setTaskId((prev) => prev + 1);
+
+  //handler for creating a task
+  const createTaskHandler = async (taskData) => {
+    //start progress modal
+    startProgress();
+
+    const { task, shift, description } = taskData;
+
+    //simulate task being created, edit later when backend is up
+    await new Promise((resolve) =>
+      setTimeout(async () => {
+        setTasks([
+          ...tasks,
+          {
+            id: taskId + 1,
+            task: task,
+            shift: shift,
+            description: description,
+          },
+        ]);
+        incTaskId();
+        resolve();
+      }, 3000)
+    );
+
+    //close progress modal
+    finishProgress();
+  };
+
+  //state for controlling open state of delete confirmation modal, with handlers
+  const [deleteConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
+  const closeDeleteConfirmModal = () => setDeleteConfirmModalOpen(false);
+  const showDeleteConfirmModal = () => setDeleteConfirmModalOpen(true);
+
+  //deny handler for delete confirm
+  const denyDeleteConfirm = () => closeDeleteConfirmModal();
+
+  //confirm handler for deleting the selected tasks
+  const confirmDeleteTasksHandler = async () => {
+    deleteTasksHandler();
+    closeDeleteConfirmModal();
+  };
+
+  //state for controlling open state of create task form modal, with handlers
+  const [createTaskFormModalOpen, setCreateTaskFormModalOpen] = useState(false);
+  const closeCreateTaskFormModal = () => setCreateTaskFormModalOpen(false);
+  const showCreateTaskFormModal = () => setCreateTaskFormModalOpen(true);
+
   return (
     <>
       {/*shows the task cards*/}
@@ -133,44 +187,80 @@ export default function AdminTasks({ tasks, setTasks }) {
         editTaskHandler={editTaskHandler}
       />
 
-      {/*only show delete button when user has selected tasks for deletion*/}
-      {Object.values(tasksDeleteState).some((ele) => ele) && (
-        <DeleteTasksButton deleteTasksHandler={deleteTasksHandler} />
-      )}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+        }}
+      >
+        {/*create task button for showing create task form*/}
+        <CreateTaskFormButton clickHandler={showCreateTaskFormModal} />
+        {/*only show delete button when user has selected tasks for deletion*/}
+        {Object.values(tasksDeleteState).some((ele) => ele) && (
+          <DeleteTasksButton clickHandler={showDeleteConfirmModal} />
+        )}
+      </div>
 
       {/*Modal that will stay up while an action is in progress, blocking further user input*/}
       <ProgressModal isOpen={inProgress} />
+
+      {/*Modal for confirming deletion*/}
+      <ConfirmModal
+        id={"admin-task-delete-confirmation-modal"}
+        zIndex={100}
+        confirmMessage={"Are you sure you want to delete these tasks?"}
+        confirmHandler={confirmDeleteTasksHandler}
+        denyHandler={denyDeleteConfirm}
+        confirmModalOpen={deleteConfirmModalOpen}
+        closeModalHandler={closeDeleteConfirmModal}
+      />
+
+      {/*Modal for create task modal*/}
+      <Modal
+        id="admin-task-create-task-form-modal"
+        isOpen={createTaskFormModalOpen}
+        closeHandler={closeCreateTaskFormModal}
+        zIndex={100}
+      >
+        <AdminCreateTaskForm
+          createTaskHandler={createTaskHandler}
+          closeModalHandler={closeCreateTaskFormModal}
+        />
+      </Modal>
     </>
   );
 }
 
 //simple delete task button, shows in progress message while deletion is happening
 
-//TODO
-//need to implement confirm message modal asking user if they really want to delete these tasks
-//perhaps find better wway to show deletion in progress
-//better way to disable clicks once deletion is in progress?
-//better styling, just winging it for now
-
-const DeleteTasksButton = ({ deleteTasksHandler }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const DeleteTasksButton = ({ clickHandler }) => {
   return (
     <button
-      onClick={async () => {
-        setIsLoading(true);
-        await deleteTasksHandler();
-        setIsLoading(false);
-      }}
-      disabled={isLoading}
+      onClick={clickHandler}
       style={{
         width: "100px",
         display: "flex",
         justifyContent: "center",
-        marginTop: "20px",
-        margin: "auto",
       }}
     >
-      {isLoading ? "Deletion in Progress..." : "Delete"}
+      Delete
+    </button>
+  );
+};
+
+//simple create task button, opens modal for task form
+const CreateTaskFormButton = ({ clickHandler }) => {
+  return (
+    <button
+      onClick={clickHandler}
+      style={{
+        width: "100px",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      Create
     </button>
   );
 };

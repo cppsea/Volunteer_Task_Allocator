@@ -22,7 +22,6 @@ export default function AdminTaskCard({
 }) {
   //state for controlling whether expanded task modal is open or not
   const [expandTaskOpen, setExpandTaskOpen] = useState(false);
-
   //open handler for expand task modal
   const openExpandTaskOpen = () => setExpandTaskOpen(true);
 
@@ -132,6 +131,9 @@ export default function AdminTaskCard({
           editTaskHandler={editTaskHandler}
         />
       </Modal>
+
+    
+      
     </>
   );
 }

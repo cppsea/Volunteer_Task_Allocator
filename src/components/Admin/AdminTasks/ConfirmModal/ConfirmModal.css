@@ -1,4 +1,4 @@
-.task-delete-confirmation-modal {
+.admin-task-confirmation-modal {
   height: 200px;
   width: 230px;
   border-radius: 20px;
@@ -9,33 +9,33 @@
   align-items: center;
   background-color: var(--confirmation-modal-bg);
   gap: 40px;
-  padding: 0 10px;
+  padding: 5px 10px;
   font-weight: 700;
   font-size: 1.2rem;
   line-height: 1.5rem;
 }
 
-.delete-confirmation-message {
+.admin-task-confirmation-modal {
   text-align: center;
 }
 
-.delete-confirmation-buttons-container {
+.admin-task-confirm-buttons-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
 
-.delete-confirmation-button {
+.admin-task-confirm-modal-button {
   width: 20%;
   display: flex;
   justify-content: center;
 }
 
-.confirm {
+.admin-task-confirm {
   background: var(--confirm-btn-bg);
 }
 
-.deny {
+.admin-task-deny {
   background: var(--deny-btn-bg);
 }

@@ -1,4 +1,4 @@
-import "./AdminEditTaskForm.css";
+import "./AdminCreateTaskForm.css";
 import { useRef, useState } from "react";
 import TextInput from "../../inputs/TextInputs/TextInput";
 import Select from "../../inputs/Selects/Select";
@@ -6,16 +6,15 @@ import TextFieldInput from "../../inputs/TextInputs/TextFieldInput";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ConfirmModal from "../../../Admin/AdminTasks/ConfirmModal/ConfirmModal";
-export default function AdminEditTaskForm({
-  task,
-  editTaskHandler,
+export default function AdminCreateTaskForm({
+  createTaskHandler,
   closeModalHandler,
 }) {
   //form data
   const [taskData, setTaskData] = useState({
-    task: task.task,
-    shift: task.shift,
-    description: task.description,
+    task: "",
+    shift: "",
+    description: "",
   });
 
   //input handler
@@ -27,73 +26,74 @@ export default function AdminEditTaskForm({
     });
   };
 
-  //edit form ref
-  const editFormRef = useRef(null);
+  //create form ref
+  const createFormRef = useRef(null);
 
-  //state for confirm edit modal
-  const [editConfirmModalOpen, setDeleteConfirmModalOpen] = useState(false);
+  //state for confirm create modal
+  const [createConfirmModalOpen, setCreateConfirmModalOpen] = useState(false);
   //handlers for closing/showing
 
-  const closeEditConfirmModal = () => setDeleteConfirmModalOpen(false);
-  const showEditConfirmModal = () => setDeleteConfirmModalOpen(true);
+  const closeCreateConfirmModal = () => setCreateConfirmModalOpen(false);
+  const showCreateConfirmModal = () => setCreateConfirmModalOpen(true);
 
-  //handler for denying edit confirmation
-  const denyEditConfirmHandler = () => closeEditConfirmModal();
+  //handler for denying create confirmation
+  const denyEditConfirmHandler = () => closeCreateConfirmModal();
 
-  //handler confirming edit confirmation
-  const confirmEditHandler = () => {
+  //handler confirming create confirmation
+  const confirmCreateHandler = () => {
     //submit form and close edit confirm modal
-    editFormRef.current.dispatchEvent(
-      new Event("submit", { cancelable: true })
+    createFormRef.current.dispatchEvent(
+      new Event("submit", { cancelable: true, bubbles: true })
     );
-    closeEditConfirmModal();
+    closeCreateConfirmModal();
   };
 
   //submit handler
   const submitHandler = (evt) => {
     evt.preventDefault();
-    editTaskHandler(taskData);
+    createTaskHandler(taskData);
+    closeModalHandler();
   };
 
   return (
-    <div className="admin-edit-task-form modal">
-      <div className="admin-edit-task-header">
-        <h4 className="admin-edit-task-title">Edit your task</h4>
+    <div className="admin-create-task-form modal">
+      <div className="admin-create-task-header">
+        <h4 className="admin-create-task-title">Create your task</h4>
         <span
-          className="edit-task-form-icon edit-task-form-icon-dismiss"
+          className="create-task-form-icon create-task-form-icon-dismiss"
           onClick={closeModalHandler}
         >
           <FontAwesomeIcon icon={faX} />
         </span>
       </div>
-      <form onSubmit={submitHandler} ref={editFormRef}>
+      <form onSubmit={submitHandler} ref={createFormRef}>
         <TaskNameInput state={taskData} onChange={handleChange} />
         <TaskShiftSelect state={taskData} onChange={handleChange} />
         <TaskDescriptionInput state={taskData} onChange={handleChange} />
         <button
           type="button"
-          className="edit-task-form-button"
-          onClick={showEditConfirmModal}
+          className="create-task-form-button"
+          onClick={showCreateConfirmModal}
         >
-          Edit
+          Create
         </button>
       </form>
       <ConfirmModal
-        id={"admin-task-edit-confirmation-modal"}
+        id={"admin-task-create-confirmation-modal"}
         zIndex={102}
-        confirmMessage={"Are you sure you want to edit this task?"}
-        confirmHandler={confirmEditHandler}
+        confirmMessage={"Are you sure you want to create this task?"}
+        confirmHandler={confirmCreateHandler}
         denyHandler={denyEditConfirmHandler}
-        confirmModalOpen={editConfirmModalOpen}
-        closeModalHandler={closeEditConfirmModal}
+        confirmModalOpen={createConfirmModalOpen}
+        closeModalHandler={closeCreateConfirmModal}
       />
     </div>
   );
 }
 
 const TaskNameInput = ({ state, onChange, error }) => (
-  <div className="admin-edit-task-input-section">
-    <label className="admin-edit-task-input-label" htmlFor="task-name-input">
+  <div className="admin-create-task-input-section">
+    <label className="admin-create-task-input-label" htmlFor="task-name-input">
       Task Name
     </label>
     <TextInput
@@ -109,8 +109,11 @@ const TaskNameInput = ({ state, onChange, error }) => (
 );
 
 const TaskShiftSelect = ({ state, onChange, error }) => (
-  <div className="admin-edit-task-input-section">
-    <label className="admin-edit-task-input-label" htmlFor="task-shift-select">
+  <div className="admin-create-task-input-section">
+    <label
+      className="admin-create-task-input-label"
+      htmlFor="task-shift-select"
+    >
       Task Shift
     </label>
     <Select
@@ -130,9 +133,9 @@ const TaskShiftSelect = ({ state, onChange, error }) => (
 );
 
 const TaskDescriptionInput = ({ state, onChange, error }) => (
-  <div className="admin-edit-task-input-section">
+  <div className="admin-create-task-input-section">
     <label
-      className="admin-edit-task-input-label"
+      className="admin-create-task-input-label"
       htmlFor="task-description-input"
     >
       Task Description

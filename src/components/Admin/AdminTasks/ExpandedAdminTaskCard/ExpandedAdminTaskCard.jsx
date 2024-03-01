@@ -2,9 +2,9 @@ import "./ExpandedAdminTaskCard.css";
 import { faX, faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
 import Modal from "../../../Modal/Modal";
 import AdminEditTaskForm from "../../../forms/Admin/AdminEditTaskForm/AdminEditTaskForm";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 //expanded view of task card
 //accepts task object and close modal handler (for the x button)
@@ -25,6 +25,13 @@ export default function ExpandedAdminTaskCard({
   const [editTaskOpen, setEditTaskOpen] = useState(false);
   const openEditTask = () => setEditTaskOpen(true);
   const closeEditTask = () => setEditTaskOpen(false);
+
+  //confirm handler for deletion
+  const confirmDeleteTaskHandler = async () => {
+    closeDeleteConfirmModal();
+    deleteTaskHandler();
+    closeModalHandler();
+  };
 
   return (
     <>
@@ -71,11 +78,16 @@ export default function ExpandedAdminTaskCard({
           </span>
         </div>
       </div>
-      <DeleteConfirmationModal
-        deleteConfirmModalOpen={deleteConfirmModalOpen}
-        deleteTaskHandler={deleteTaskHandler}
-        closeExpandedTaskModal={closeModalHandler}
-        closeDeleteConfirmModal={closeDeleteConfirmModal}
+
+      {/*Modal for confirming deletion*/}
+      <ConfirmModal
+        id={"admin-task-delete-confirmation-modal"}
+        zIndex={101}
+        confirmMessage={"Are you sure you want to delete this task?"}
+        confirmHandler={confirmDeleteTaskHandler}
+        denyHandler={closeDeleteConfirmModal}
+        confirmModalOpen={deleteConfirmModalOpen}
+        closeModalHandler={closeDeleteConfirmModal}
       />
 
       {/*Modal for showing edit card form*/}
