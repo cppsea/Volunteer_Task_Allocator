@@ -1,0 +1,47 @@
+.TextInput-container {
+  display: inline-block;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.TextInput {
+  background-color: var(--input-background);
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.error {
+  border: 1px solid rgb(204, 43, 43);
+}
+
+.error:focus {
+  outline-color: rgb(204, 43, 43);
+}
+
+.TextInput-error {
+  font-size: 0.8rem;
+  color: rgb(204, 43, 43);
+}
+
+.password {
+  padding-right: 50px;
+}
+
+.password-visible-icon {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translate(-50%, -50%);
+}
+
+.password-visible-icon:hover {
+  cursor: pointer;
+}
+
+.textarea {
+  resize: none;
+}

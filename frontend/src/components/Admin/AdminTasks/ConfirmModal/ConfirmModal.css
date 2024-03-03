@@ -1,0 +1,41 @@
+.admin-task-confirmation-modal {
+  height: 200px;
+  width: 230px;
+  border-radius: 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--confirmation-modal-bg);
+  gap: 40px;
+  padding: 5px 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+.admin-task-confirmation-modal {
+  text-align: center;
+}
+
+.admin-task-confirm-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin-task-confirm-modal-button {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-task-confirm {
+  background: var(--confirm-btn-bg);
+}
+
+.admin-task-deny {
+  background: var(--deny-btn-bg);
+}

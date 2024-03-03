@@ -1,0 +1,34 @@
+.taskboard {
+  display: flex;
+  flex-direction: column;
+  background: var(--taskboard-background);
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 1300px;
+  flex-grow: 1;
+}
+
+.taskboard-header-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  background: var(--taskboard-header-background);
+  padding: 1rem 2rem;
+  border-radius: 1rem 1rem 0 0;
+  width: 100%;
+}
+
+.taskboard-header {
+}
+
+.taskboard-header-text {
+  color: rgb(240, 236, 236);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.taskboard-tasklist {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+}

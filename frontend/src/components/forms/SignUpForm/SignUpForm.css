@@ -1,0 +1,5 @@
+.signin-btn{
+    border: 1px solid var(--signin-btn-background);
+    background-color: var(--signin-btn-background);
+    color: var(--signin-btn-text);
+}
