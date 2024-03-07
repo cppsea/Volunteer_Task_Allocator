@@ -1,5 +1,6 @@
 from flask import Flask
 from models import db, login_manager
+from routes import app as routes_app
 from os import environ
 
 app = Flask(__name__)
@@ -11,3 +12,6 @@ with app.app_context():
     db.init_app(app)
     login_manager.init_app(app)
     db.create_all()
+    print("Database initialized...")
+
+app.register_blueprint(routes_app)

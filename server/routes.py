@@ -1,33 +1,31 @@
-from app import app, db
 from flask import (
+    Blueprint,
     request,
     jsonify,
-    abort,
-    render_template,
-    flash,
-    redirect,
-    url_for,
 )
-from models import User, Task
+from models import db, User, Task
 import random
 # from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 # can remove if modelview is no longer being used
-from flask_admin import ModelView
+# from flask_admin import ModelView
+
+app = Blueprint('routes', __name__)
 
 # endpoint for users entering login info and logging in using an existing account
 @app.route('/api/login', methods=['POST'])
 def login():
     # grab email data from login form
+    print("login request received")
     data = request.json
-    user = User.query.filter_by(email=data['email']).first()
-    
+    user = User.query.filter_by(username=data['name']).first()
+
     # if the user exists and the password is correctly entered, log the user in and return
     # response containing success message and status as well as username and email of the user for parsing the webpage
     if user and user.check_password(data['password']):
         
         login_user(user)
-        
+        print("logged in successfully")
         return jsonify({
             'success': True, 
             'message': 'Logged in successfully', 
@@ -38,6 +36,7 @@ def login():
         }), 200
 
     # if authentication fails, return an error
+    print("failed auth")
     return jsonify({'error': 'Invalid email or password'}), 401
 
 # endpoint that assigns task to logged in user upon request
@@ -80,6 +79,7 @@ def register():
         return jsonify({'error': 'Email already in use'}), 400
     
     new_user = User(username=data['username'], email=data['email'])
+    # note: if this fails (aka the password is less than 'min' chars, it returns error 500)
     new_user.set_password(data['password'])
     db.session.add(new_user)
     db.session.commit()
@@ -89,12 +89,12 @@ def register():
     return jsonify({'success': True, 'message': 'Registration successful. Please log in.'}), 201
 
 # probably integrate or replace modelview with frontend admin task panel (once ready)
-class MyModelView(ModelView):
-    def is_accessible(self):
-        return current_user.is_authenticated
+# class MyModelView(ModelView):
+#     def is_accessible(self):
+#         return current_user.is_authenticated
     
-    def inaccessible_callback(self, name, **kwargs):
-        return jsonify({'error': 'User not authorized'}), 403
+#     def inaccessible_callback(self, name, **kwargs):
+#         return jsonify({'error': 'User not authorized'}), 403
 
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
