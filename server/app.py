@@ -12,6 +12,5 @@ with app.app_context():
     db.init_app(app)
     login_manager.init_app(app)
     db.create_all()
-    print("Database initialized...")
 
 app.register_blueprint(routes_app)

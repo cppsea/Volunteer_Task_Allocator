@@ -16,7 +16,6 @@ app = Blueprint('routes', __name__)
 @app.route('/api/login', methods=['POST'])
 def login():
     # grab email data from login form
-    print("login request received")
     data = request.json
     user = User.query.filter_by(username=data['name']).first()
 
@@ -25,7 +24,6 @@ def login():
     if user and user.check_password(data['password']):
         
         login_user(user)
-        print("logged in successfully")
         return jsonify({
             'success': True, 
             'message': 'Logged in successfully', 
@@ -36,7 +34,6 @@ def login():
         }), 200
 
     # if authentication fails, return an error
-    print("failed auth")
     return jsonify({'error': 'Invalid email or password'}), 401
 
 # endpoint that assigns task to logged in user upon request
