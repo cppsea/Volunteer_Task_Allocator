@@ -97,7 +97,7 @@ def admin_login():
     admin_username = "admin"  # Predefined admin username
     admin_password = "password"  # Predefined admin password
 
-    user = User.query.filter_by(roles=data['roles']).first()
+    user = User.query.filter_by(username=data['name']).first()
     # maybe find if roles == admin, then continue with flask login
 
     if  user and user.check_password(data['password']) and (role.name == 'admin' for role in user.roles):
@@ -107,7 +107,7 @@ def admin_login():
     else:
         return jsonify({'error': 'Invalid admin credentials'}), 401
     
-@app.route('/logout')
+@app.route('/api/logout', methods=['POST'])
 def logout():
     logout_user()
     return jsonify({'success': True, 'message': 'Logged out'}, 200)
