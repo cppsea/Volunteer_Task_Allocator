@@ -66,8 +66,6 @@ def assign_task():
             'description': random_task.description
         }
     }), 200
-    
-    
 
 @app.route('/api/register', methods=['POST'])
 def register():
