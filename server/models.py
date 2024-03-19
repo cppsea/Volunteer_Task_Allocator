@@ -21,6 +21,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # note: username = Full Name
     username = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    first_name = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    last_name = db.Column(db.String(100), index=True, nullable=False, unique=True)
     email = db.Column(db.String(120), index=True, nullable=False, unique=True)
     password_hash = db.Column(db.String(120), nullable=False)
     #password_hashenc = db.Column(db.String(120))

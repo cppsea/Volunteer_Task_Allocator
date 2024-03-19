@@ -7,10 +7,24 @@ from models import db, User, Task
 import random
 # from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
-# can remove if modelview is no longer being used
-# from flask_admin import ModelView
 
 app = Blueprint('routes', __name__)
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    data = request.json
+    if User.query.filter_by(email=data['email']).first():
+        return jsonify({'error': 'Email already in use'}), 400
+    
+    new_user = User(username = data['username'], first_name=data['first_name'], last_name=data['last_name'], email=data['email'])
+    # note: if this fails (aka the password is less than 'min' chars, it returns error 500)
+    new_user.set_password(data['password'])
+    db.session.add(new_user)
+    db.session.commit()
+
+    # frontend needs to handle redirection to the login page based on this response.
+
+    return jsonify({'success': True, 'message': 'Registration successful. Please log in.'}), 201
 
 # endpoint for users entering login info and logging in using an existing account
 @app.route('/api/login', methods=['POST'])
@@ -36,6 +50,11 @@ def login():
     # if authentication fails, return an error
     return jsonify({'error': 'Invalid email or password'}), 401
 
+@app.route('/api/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return jsonify({'success': True, 'message': 'Logged out'}, 200)
+
 # endpoint that assigns task to logged in user upon request
 @app.route("/api/assign-task", methods=["POST"])
 @login_required
@@ -43,10 +62,10 @@ def assign_task():
     # fetch ids of tasks already assigned to the users
     all_users = User.query.all()
     for user in all_users:
-        assigned_tasks_ids = [task.id for task in user.tasks_assigned]
+        assigned_tasks_ids = [task.task_id for task in user.tasks_assigned]
     
     # find tasks that are not assigned to the current user
-    available_tasks = Task.query.filter(~Task.id.in_(assigned_tasks_ids)).all()
+    available_tasks = Task.query.filter(~Task.task_id.in_(assigned_tasks_ids)).all()
     
     if not available_tasks:
         # no available tasks to assign
@@ -62,34 +81,10 @@ def assign_task():
         'success': True,
         'message': 'Task assigned successfully',
         'task': {
-            'id': random_task.id,
+            'id': random_task.task_id,
             'description': random_task.description
         }
     }), 200
-
-@app.route('/api/register', methods=['POST'])
-def register():
-    data = request.json
-    if User.query.filter_by(email=data['email']).first():
-        return jsonify({'error': 'Email already in use'}), 400
-    
-    new_user = User(username=data['username'], email=data['email'])
-    # note: if this fails (aka the password is less than 'min' chars, it returns error 500)
-    new_user.set_password(data['password'])
-    db.session.add(new_user)
-    db.session.commit()
-
-    # frontend needs to handle redirection to the login page based on this response.
-
-    return jsonify({'success': True, 'message': 'Registration successful. Please log in.'}), 201
-
-# probably integrate or replace modelview with frontend admin task panel (once ready)
-# class MyModelView(ModelView):
-#     def is_accessible(self):
-#         return current_user.is_authenticated
-    
-#     def inaccessible_callback(self, name, **kwargs):
-#         return jsonify({'error': 'User not authorized'}), 403
 
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
@@ -99,18 +94,12 @@ def admin_login():
 
     user = User.query.filter_by(username=data['name']).first()
     # maybe find if roles == admin, then continue with flask login
-
-    if  user and user.check_password(data['password']) and (role.name == 'admin' for role in user.roles):
+    if  user and user.check_password(data['password']) and any(role.name == 'admin' for role in user.roles):
         #set up admin session or token-based authentication(?) here
         login_user(user)
         return jsonify({'success': True, 'message': 'Admin logged in successfully'}), 200
     else:
         return jsonify({'error': 'Invalid admin credentials'}), 401
-    
-@app.route('/api/logout', methods=['POST'])
-def logout():
-    logout_user()
-    return jsonify({'success': True, 'message': 'Logged out'}, 200)
 
 # this route will provide the admin with a list of users, 
 # the tasks assigned to each user, and the assignment times.
@@ -135,6 +124,7 @@ def admin_users_tasks():
 # @login_required  # ensure this is accessible only by authenticated admins for POST requests
 def manage_tasks():
     # add task according to form
+    # note: getting 415 error when testing api's
     if request.method == 'POST':
         data = request.json
         new_task = Task(task=data.get('task'), shift=data.get('shift'), description=data.get('description'))  # Updated to include 'task', 'shift', and 'description'
@@ -142,11 +132,11 @@ def manage_tasks():
         db.session.add(new_task)
         db.session.commit()
         return jsonify({'success': True, 'message': 'Task added successfully'}), 201
-    
+
     # view list of all tasks and their description and which user it is assigned to (if assigned to any)
     elif request.method == 'GET':
         tasks = Task.query.all()
-        all_users = User.query().all()
+        all_users = User.query.all()
         # get task description and id and store in list containing each task's info
         tasks_list = [{'id': task.id, 'description': task.description} for task in tasks]
         for i in range(len(tasks_list)):
@@ -172,7 +162,7 @@ def user_tasks_and_others():
         {
             'id': task.id,
             'description': task.description,
-            
+ 
         } 
         for task in current_user.tasks_assigned
     ]
