@@ -4,11 +4,13 @@ from flask import (
     jsonify,
 )
 from models import db, User, Task
+from flask_cors import CORS
 import random
 # from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 
 app = Blueprint('routes', __name__)
+cors = CORS()
 
 @app.route('/api/register', methods=['POST'])
 def register():
