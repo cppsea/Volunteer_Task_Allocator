@@ -15,14 +15,21 @@ cors = CORS()
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.json
+    # error handling for same email/username
     if User.query.filter_by(email=data['email']).first():
         return jsonify({'error': 'Email already in use'}), 400
+    if User.query.filter_by(email=data['username']).first():
+        return jsonify({'error': 'Username already in use'}), 400
     
     new_user = User(username = data['username'], first_name=data['first_name'], last_name=data['last_name'], email=data['email'])
-    # note: if this fails (aka the password is less than 'min' chars, it returns error 500)
-    new_user.set_password(data['password'])
-    db.session.add(new_user)
-    db.session.commit()
+    # if password does not meet minimum char requirements, handle.
+    try:
+        new_user.set_password(data['password'])
+        db.session.add(new_user)
+        db.session.commit()
+    
+    except ValueError as e:
+        return jsonify({'error': repr(e)}), 400
 
     # frontend needs to handle redirection to the login page based on this response.
 

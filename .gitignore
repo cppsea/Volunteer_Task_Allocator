@@ -3,3 +3,4 @@ instance/
 node_modules/
 .venv/
 bruno/
+env/
