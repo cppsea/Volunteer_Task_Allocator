@@ -7,10 +7,28 @@ from models import db, User, Task
 from flask_cors import CORS
 import random
 # from werkzeug.urls import url_parse
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_jwt_extended import create_access_token, current_user, get_jwt, jwt_required, JWTManager
+import redis
+from app import ACCESS_EXPIRES
 
 app = Blueprint('routes', __name__)
 cors = CORS()
+jwt = JWTManager()
+
+# Setup our redis connection for storing the blocklisted tokens. You will probably
+# want your redis instance configured to persist data to disk, so that a restart
+# does not cause your application to forget that a JWT was revoked.
+jwt_redis_blocklist = redis.StrictRedis(
+    host="localhost", port=6379, db=0, decode_responses=True
+)
+
+
+# Callback function to check if a JWT exists in the redis blocklist
+@jwt.token_in_blocklist_loader
+def check_if_token_is_revoked(jwt_header, jwt_payload: dict):
+    jti = jwt_payload["jti"]
+    token_in_redis = jwt_redis_blocklist.get(jti)
+    return token_in_redis is not None
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -46,27 +64,28 @@ def login():
     # response containing success message and status as well as username and email of the user for parsing the webpage
     if user and user.check_password(data['password']):
         
-        login_user(user)
+        access_token = create_access_token(identity=user)
         return jsonify({
             'success': True, 
             'message': 'Logged in successfully', 
             'user': {
                 'username': user.username, 
                 'email': user.email
-            }
-        }), 200
+            },
+        }, access_token=access_token), 200
 
     # if authentication fails, return an error
     return jsonify({'error': 'Invalid email or password'}), 401
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
-    logout_user()
+    jti = get_jwt()["jti"]
+    jwt_redis_blocklist.set(jti, "", ex=ACCESS_EXPIRES)
     return jsonify({'success': True, 'message': 'Logged out'}, 200)
 
 # endpoint that assigns task to logged in user upon request
 @app.route("/api/assign-task", methods=["POST"])
-@login_required
+@jwt_required
 def assign_task():
     # fetch ids of tasks already assigned to the users
     all_users = User.query.all()
@@ -105,8 +124,8 @@ def admin_login():
     # maybe find if roles == admin, then continue with flask login
     if  user and user.check_password(data['password']) and any(role.name == 'admin' for role in user.roles):
         #set up admin session or token-based authentication(?) here
-        login_user(user)
-        return jsonify({'success': True, 'message': 'Admin logged in successfully'}), 200
+        access_token = create_access_token(identity=user)
+        return jsonify({'success': True, 'message': 'Admin logged in successfully'}, access_token=access_token), 200
     else:
         return jsonify({'error': 'Invalid admin credentials'}), 401
 
@@ -164,7 +183,7 @@ def manage_tasks():
 
 # current user's assigned tasks and a list of other users with their tasks
 @app.route('/api/user/tasks-and-others', methods=['GET'])
-@login_required
+@jwt_required
 def user_tasks_and_others():
     # fetching the current user's tasks
     user_tasks_list = [
