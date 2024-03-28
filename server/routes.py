@@ -17,9 +17,9 @@ def register():
     data = request.json
     # error handling for same email/username
     if User.query.filter_by(email=data['email']).first():
-        return jsonify({'error': 'Email already in use'}), 400
+        return jsonify({'errors': [{'email': 'Email already in use'}]}), 400
     if User.query.filter_by(email=data['username']).first():
-        return jsonify({'error': 'Username already in use'}), 400
+        return jsonify({'errors': [{'username': 'Username already in use'}]}), 400
     
     new_user = User(username = data['username'], first_name=data['first_name'], last_name=data['last_name'], email=data['email'])
     # if password does not meet minimum char requirements, handle.
@@ -27,9 +27,9 @@ def register():
         new_user.set_password(data['password'])
         db.session.add(new_user)
         db.session.commit()
-    
+    # password error
     except ValueError as e:
-        return jsonify({'error': repr(e)}), 400
+        return jsonify({'errors': [{'password':repr(e)}]}), 400
 
     # frontend needs to handle redirection to the login page based on this response.
 
