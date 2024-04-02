@@ -1,11 +1,10 @@
 from flask import Flask
 from models import db, jwt
-from routes import app as routes_app, cors
+from routes import app as routes_app, cors, ACCESS_EXPIRES
 from os import environ
-from datetime import timedelta
 
 app = Flask(__name__)
-ACCESS_EXPIRES = timedelta(hours=1)
+
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

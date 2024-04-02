@@ -9,8 +9,9 @@ import random
 # from werkzeug.urls import url_parse
 from flask_jwt_extended import create_access_token, current_user, get_jwt, jwt_required
 import redis
-from app import ACCESS_EXPIRES
+from datetime import timedelta
 
+ACCESS_EXPIRES = timedelta(hours=1)
 app = Blueprint('routes', __name__)
 cors = CORS()
 
@@ -85,7 +86,7 @@ def logout():
 
 # endpoint that assigns task to logged in user upon request
 @app.route("/api/assign-task", methods=["POST"])
-@jwt_required
+@jwt_required()
 def assign_task():
     # fetch ids of tasks already assigned to the users
     all_users = User.query.all()
@@ -183,7 +184,7 @@ def manage_tasks():
 
 # current user's assigned tasks and a list of other users with their tasks
 @app.route('/api/user/tasks-and-others', methods=['GET'])
-@jwt_required
+@jwt_required()
 def user_tasks_and_others():
     # fetching the current user's tasks
     user_tasks_list = [
