@@ -1,6 +1,6 @@
 from flask import Flask
-from models import db, login_manager
-from routes import app as routes_app, cors, jwt
+from models import db, jwt
+from routes import app as routes_app, cors
 from os import environ
 from datetime import timedelta
 

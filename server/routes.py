@@ -3,17 +3,17 @@ from flask import (
     request,
     jsonify,
 )
-from models import db, User, Task
+from models import db, User, Task, jwt
 from flask_cors import CORS
 import random
 # from werkzeug.urls import url_parse
-from flask_jwt_extended import create_access_token, current_user, get_jwt, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, current_user, get_jwt, jwt_required
 import redis
 from app import ACCESS_EXPIRES
 
 app = Blueprint('routes', __name__)
 cors = CORS()
-jwt = JWTManager()
+
 
 # Setup our redis connection for storing the blocklisted tokens. You will probably
 # want your redis instance configured to persist data to disk, so that a restart

@@ -3,9 +3,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_security import RoleMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
-from routes import jwt
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
+jwt = JWTManager()
 
 # Register a callback function that takes whatever object is passed in as the
 # identity when creating JWTs and converts it to a JSON serializable format.
