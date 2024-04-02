@@ -1,4 +1,5 @@
-﻿Babel==2.14.0 # (NOT DIRECTLY USED) integrated collection of utilities that assist in internationalizing and localizing (adapting to support various configurations) the web app
+﻿async-timeout==4.0.3 # (NOT DIRECTLY USED) timeout context manager for asynchio functions
+Babel==2.14.0 # (NOT DIRECTLY USED) integrated collection of utilities that assist in internationalizing and localizing (adapting to support various configurations) the web app
 blinker==1.7.0 # (NOT DIRECTLY USED) provides a fast dispatching system that allows any number of interested parties to subscribe to events, or “signals”. signalling for Python objects
 click==8.1.7 # (NOT DIRECTLY USED) used for creating command line interfacing when running the Flask application
 colorama==0.4.6 # (NOT DIRECTLY USED) Makes ANSI escape character sequences (for producing colored terminal text and cursor positioning) work under MS Windows.
@@ -7,7 +8,6 @@ Flask-Admin==1.6.1 # provides the ability to separate endpoints as admin-only in
 Flask-BabelEx==0.9.4 # (NOT DIRECTLY USED)  adds internationalization and localization support to any Flask application with the help of babel, pytz and speaklater. It has builtin support for date formatting with timezone support as well as a very simple and friendly interface to gettext translations.
 Flask-Cors==4.0.0 # enables cross-origin resource sharing for the web app, which is used for the frontend to communicate with the backend API
 Flask-JWT-Extended==4.6.0 # JSON web token implementation for flask
-Flask-Login==0.6.3 # provides user session management for Flask. It handles the common tasks of logging in, logging out, and remembering your users’ sessions over extended periods of time.
 Flask-Mail==0.9.1 # (NOT DIRECTLY USED) provides a simple interface to set up SMTP with the Flask application and to send messages from view functions and scripts
 Flask-Principal==0.4.0 # (NOT DIRECTLY USED) a framework that allows us to flexibly integrate authentication and user information providers into the Flask app
 Flask-Security==3.0.0 # allows to quickly add common security mechanisms to the Flask application
