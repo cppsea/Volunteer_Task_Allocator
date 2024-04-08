@@ -10,7 +10,6 @@ Flask-Cors==4.0.0 # enables cross-origin resource sharing for the web app, which
 Flask-JWT-Extended==4.6.0 # JSON web token implementation for flask
 Flask-Mail==0.9.1 # (NOT DIRECTLY USED) provides a simple interface to set up SMTP with the Flask application and to send messages from view functions and scripts
 Flask-Principal==0.4.0 # (NOT DIRECTLY USED) a framework that allows us to flexibly integrate authentication and user information providers into the Flask app
-Flask-Security==3.0.0 # allows to quickly add common security mechanisms to the Flask application
 Flask-SQLAlchemy==3.1.1 # integration of Flask with SQLAlchemy
 Flask-WTF==1.2.1 # integration of Flask with WTForms
 greenlet==3.0.1 # (NOT DIRECTLY USED) lightweight coroutines for in-process sequential concurrent programming

@@ -73,7 +73,8 @@ def login():
                 'username': user.username, 
                 'email': user.email
             },
-        }, access_token=access_token), 200
+            'access_token': access_token
+        }), 200
 
     # if authentication fails, return an error
     return jsonify({'error': 'Invalid email or password'}), 401
@@ -126,7 +127,7 @@ def admin_login():
     if  user and user.check_password(data['password']) and any(role.name == 'admin' for role in user.roles):
         #set up admin session or token-based authentication(?) here
         access_token = create_access_token(identity=user)
-        return jsonify({'success': True, 'message': 'Admin logged in successfully'}, access_token=access_token), 200
+        return jsonify({'success': True, 'message': 'Admin logged in successfully', 'access_token': access_token}), 200
     else:
         return jsonify({'error': 'Invalid admin credentials'}), 401
 

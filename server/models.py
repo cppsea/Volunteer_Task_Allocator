@@ -1,6 +1,5 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_security import RoleMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
 from flask_jwt_extended import JWTManager
@@ -64,7 +63,7 @@ def validate_username(self, key, value):
     return value
     
 # role table for role-based access control
-class Role(RoleMixin, db.Model):
+class Role(db.Model):
     __tablename__ = 'roles'
 
     id = db.Column(db.Integer, primary_key=True)
