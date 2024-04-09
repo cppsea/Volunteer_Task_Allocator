@@ -19,7 +19,7 @@ def register():
     # error handling for same email/username
     if User.query.filter_by(email=data['email']).first():
         return jsonify({'errors': [{'email': 'Email already in use'}]}), 400
-    if User.query.filter_by(email=data['username']).first():
+    if User.query.filter_by(username=data['username']).first():
         return jsonify({'errors': [{'username': 'Username already in use'}]}), 400
     
     new_user = User(username = data['username'], first_name=data['first_name'], last_name=data['last_name'], email=data['email'])
@@ -41,7 +41,7 @@ def register():
 def login():
     # grab email data from login form
     data = request.json
-    user = User.query.filter_by(username=data['name']).first()
+    user = User.query.filter_by(username=data['username']).first()
 
     # if the user exists and the password is correctly entered, log the user in and return
     # response containing success message and status as well as username and email of the user for parsing the webpage
@@ -62,6 +62,7 @@ def login():
     return jsonify({'error': 'Invalid email or password'}), 401
 
 @app.route('/api/logout', methods=['POST'])
+@jwt_required()
 def logout():
     response = jsonify({'success': True, 'message': 'Logged out'}, 200)
     unset_jwt_cookies(response)
@@ -104,10 +105,8 @@ def admin_login():
     admin_username = "admin"  # Predefined admin username
     admin_password = "password"  # Predefined admin password
 
-    user = User.query.filter_by(username=data['name']).first()
-    # maybe find if roles == admin, then continue with flask login
-    if  user and user.check_password(data['password']) and any(role.name == 'admin' for role in user.roles):
-        #set up admin session or token-based authentication(?) here
+    user = User.query.filter_by(username=data['username']).first()
+    if user and admin_username == data['username'] and admin_password == (data['password']):
         response = jsonify({'success': True, 'message': 'Admin logged in successfully'})
         access_token = create_access_token(identity=user)
         set_access_cookies(response, access_token)
@@ -142,7 +141,6 @@ def manage_tasks():
     if request.method == 'POST':
         data = request.json
         new_task = Task(task=data.get('task'), shift=data.get('shift'), description=data.get('description'))  # Updated to include 'task', 'shift', and 'description'
-        db.session.add(new_task)
         db.session.add(new_task)
         db.session.commit()
         return jsonify({'success': True, 'message': 'Task added successfully'}), 201
