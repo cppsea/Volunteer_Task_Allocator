@@ -13,7 +13,6 @@ jwt = JWTManager()
 def user_identity_lookup(user):
     return user.id
 
-
 # Register a callback function that loads a user from your database whenever
 # a protected route is accessed. This should return any python object on a
 # successful lookup, or None if the lookup failed for any reason (for example
@@ -30,8 +29,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # note: username = Full Name
     username = db.Column(db.String(100), index=True, nullable=False, unique=True)
-    first_name = db.Column(db.String(100), index=True, nullable=False, unique=True)
-    last_name = db.Column(db.String(100), index=True, nullable=False, unique=True)
+    first_name = db.Column(db.String(100), index=True, nullable=False)
+    last_name = db.Column(db.String(100), index=True, nullable=False)
     email = db.Column(db.String(120), index=True, nullable=False, unique=True)
     password_hash = db.Column(db.String(120), nullable=False)
     #password_hashenc = db.Column(db.String(120))
@@ -61,23 +60,7 @@ def validate_username(self, key, value):
     if not value:
         raise ValueError("Must include username")
     return value
-    
-# role table for role-based access control
-class Role(db.Model):
-    __tablename__ = 'roles'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=True)
-
-    def __str__(self):
-        return self.name
-    
-# association table between User and Role
-class UserRoles(db.Model):
-    __tablename__ = "user_roles"
-
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), primary_key=True)
+   
 
 # separate table for tasks, shifts, and dates
 class Task(db.Model):
