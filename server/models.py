@@ -10,8 +10,10 @@ jwt = JWTManager()
 # Register a callback function that takes whatever object is passed in as the
 # identity when creating JWTs and converts it to a JSON serializable format.
 @jwt.user_identity_loader
-def user_identity_lookup(user):
-    return user.id
+def user_identity_lookup(obj):
+    if type(obj) == User:
+        return obj.id
+    return obj
 
 
 # Register a callback function that loads a user from your database whenever

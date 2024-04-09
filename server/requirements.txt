@@ -20,7 +20,6 @@ MarkupSafe==2.1.3 # (NOT DIRECTLY USED) implements a text object that escapes sp
 passlib==1.7.4 # password hashing library which provides cross-platform implementations of over 30 password hashing algorithms and a framework for managing existing password hashes
 PyJWT==2.8.0 # (NOT DIRECTLY USED) JSON web token implementation
 pytz==2023.3.post1 # (NOT DIRECTLY USED) allows accurate and cross platform timezone calculations
-redis==5.0.3 # a quick storage solution for revoked JSON web tokens
 speaklater==1.3 # (NOT DIRECTLY USED) provides lazy strings for translations within Flask package
 SQLAlchemy==2.0.23 # (NOT DIRECTLY USED) Python SQL toolkit and Object Relational Mapper, used to create classes that represent tables of a relational database and to create objects (rows) and query using pythonic syntax
 typing_extensions==4.8.0 # (NOT USED DIRECTLY) enables new type system features to be used on older Python versions, and enables experimentation with type system features proposed in new Python enhancement proposals before added to the typing module
