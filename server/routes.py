@@ -123,8 +123,9 @@ def admin_login():
     admin_username = "admin"  # Predefined admin username
     admin_password = "password"  # Predefined admin password
 
-    if  admin_username == data['username'] and admin_password == (data['password']):
-        access_token = create_access_token(identity=data['username'])
+    user = User.query.filter_by(username=data['username']).first()
+    if user and admin_username == data['username'] and admin_password == (data['password']):
+        access_token = create_access_token(identity=user.id)
         return jsonify({'success': True, 'message': 'Admin logged in successfully', 'access_token': access_token}), 200
     else:
         return jsonify({'error': 'Invalid admin credentials'}), 401
