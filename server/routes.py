@@ -39,7 +39,7 @@ def register():
 # endpoint for users entering login info and logging in using an existing account
 @app.route('/api/login', methods=['POST'])
 def login():
-    # grab email data from login form
+    # grab user data from login form
     data = request.json
     user = User.query.filter_by(username=data['username']).first()
 
@@ -132,38 +132,55 @@ def admin_users_tasks():
 
     return jsonify(users_tasks_list), 200
 
-# this route will allow admins to add new tasks to the pool of assignable tasks.
-@app.route('/api/admin/tasks', methods=['GET', 'POST'])
+# this route will allow admins to see tasks in the pool of assignable tasks.
+@app.route('/api/admin/tasks', methods=['GET'])
 # @login_required  # ensure this is accessible only by authenticated admins for POST requests
 def manage_tasks():
-    # add task according to form
-    # note: getting 415 error when testing api's
-    if request.method == 'POST':
-        data = request.json
-        new_task = Task(task=data.get('task'), shift=data.get('shift'), description=data.get('description'))  # Updated to include 'task', 'shift', and 'description'
-        db.session.add(new_task)
-        db.session.commit()
-        return jsonify({'success': True, 'message': 'Task added successfully'}), 201
+# view list of all tasks and their description and which user it is assigned to (if assigned to any)
+    tasks = Task.query.all()
+    all_users = User.query.all()
+    # get task description and id and store in list containing each task's info
+    tasks_list = [{'id': task.task_id, 'description': task.description} for task in tasks]
+    for i in range(len(tasks_list)):
+        for user in all_users:
 
-    # view list of all tasks and their description and which user it is assigned to (if assigned to any)
-    elif request.method == 'GET':
-        tasks = Task.query.all()
-        all_users = User.query.all()
-        # get task description and id and store in list containing each task's info
-        tasks_list = [{'id': task.id, 'description': task.description} for task in tasks]
-        for i in range(len(tasks_list)):
-            for user in all_users:
+            # if user is assigned the task, add user id to appropriate task's user_assigned_to field in task list
+            if tasks_list[i]['id'] in user.tasks_assigned:
+                tasks_list[i]['user_assigned_to'] = user.id
+        if 'user_assigned_to' not in tasks_list[i] or tasks_list[i]['user_assigned_to'] == None:
 
-                # if user is assigned the task, add user id to appropriate task's user_assigned_to field in task list
-                if tasks_list[i].id in user.tasks_assigned:
-                    tasks_list[i]['user_assigned_to'] = user.id
-            if tasks_list[i]['user_assigned_to'] == None:
+            # else, assign "N/A" to user_assigned_to field
+            tasks_list[i]['user_assigned_to'] = "N/A"
+            
+    # return task list containing each task's info
+    return jsonify(tasks_list), 200
 
-                # else, assign "N/A" to user_assigned_to field
-                tasks_list[i]['user_assigned_to'] = "N/A"
-                
-        # return task list containing each task's info
-        return jsonify(tasks_list), 200
+# add tasks to the pool of assignable tasks from admin page
+@app.route('/api/admin/add-task', methods=['POST'])
+# @login_required  # ensure this is accessible only by authenticated admins for POST requests
+def add_task():
+# add task according to form
+    data = request.json
+    new_task = Task(task=data.get('task'), shift=data.get('shift'), description=data.get('description'))  # Updated to include 'task', 'shift', and 'description'
+    db.session.add(new_task)
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Task added successfully'}), 201
+
+# delete tasks from the pool of assignable tasks from admin page
+@app.route('/api/admin/delete-task', methods=['POST'])
+# @login_required  # ensure this is accessible only by authenticated admins for POST requests
+def delete_task():
+# delete task according to form (if task exists)
+    data = request.json
+    task = Task.query.filter_by(task_id=data['id']).first()
+    if task == None:
+        return jsonify({'error': 'Task not found'}), 401
+    
+    db.session.delete(task)
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Task deleted successfully'}), 201
+
+
 
 # current user's assigned tasks and a list of other users with their tasks
 @app.route('/api/user/tasks-and-others', methods=['GET'])
