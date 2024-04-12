@@ -99,16 +99,17 @@ def assign_task():
         }
     }), 200
 
+# Note: currently the front-end only has admin password, not admin username.
+#       Implement admin username to front-end if necessary
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
     data = request.json
     admin_username = "admin"  # Predefined admin username
-    admin_password = "password"  # Predefined admin password
+    admin_password = "password"  # Predefined admin passwor
 
-    user = User.query.filter_by(username=data['username']).first()
-    if user and admin_username == data['username'] and admin_password == (data['password']):
+    if data['admin_password'] == admin_password:
         response = jsonify({'success': True, 'message': 'Admin logged in successfully'})
-        access_token = create_access_token(identity=user)
+        access_token = create_access_token(identity=admin_username)
         set_access_cookies(response, access_token)
         return response, 200
     else:
