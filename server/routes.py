@@ -41,7 +41,7 @@ def register():
 def login():
     # grab user data from login form
     data = request.json
-    user = User.query.filter_by(username=data['username']).first()
+    user = User.query.filter_by(username=data['name']).first()
 
     # if the user exists and the password is correctly entered, log the user in and return
     # response containing success message and status as well as username and email of the user for parsing the webpage
@@ -180,8 +180,6 @@ def delete_task():
     db.session.delete(task)
     db.session.commit()
     return jsonify({'success': True, 'message': 'Task deleted successfully'}), 201
-
-
 
 # current user's assigned tasks and a list of other users with their tasks
 @app.route('/api/user/tasks-and-others', methods=['GET'])
