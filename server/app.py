@@ -34,6 +34,14 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = ACCESS_EXPIRES
 # If true this will only allow the cookies that contain your JWTs to be sent
 # over https. In production, this should always be set to True
 app.config["JWT_COOKIE_SECURE"] = False
+# Enable csrf double submit protection. See this for a thorough
+# explanation: http://www.redotheweb.com/2015/11/09/api-security.html
+app.config['JWT_COOKIE_CSRF_PROTECT'] = True
+# Set the cookie paths, so that you are only sending your access token
+# cookie to the access endpoints, Technically this is optional, but it is in
+# your best interest to not send additional cookies in the request if
+# they aren't needed.
+app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 
 
