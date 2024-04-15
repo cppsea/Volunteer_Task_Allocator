@@ -41,7 +41,7 @@ def register():
 def login():
     # grab user data from login form
     data = request.json
-    user = User.query.filter_by(username=data['name']).first()
+    user = User.query.filter_by(username=data['username']).first()
 
     # if the user exists and the password is correctly entered, log the user in and return
     # response containing success message and status as well as username and email of the user for parsing the webpage

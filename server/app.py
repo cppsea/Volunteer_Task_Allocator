@@ -4,7 +4,7 @@ from routes import app as routes_app, cors
 from os import environ
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, set_access_cookies
-6
+
 # expiration time of a JWT
 ACCESS_EXPIRES = timedelta(hours=1)
 
