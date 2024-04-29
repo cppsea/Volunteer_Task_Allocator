@@ -3,7 +3,7 @@ from flask import (
     request,
     jsonify,
 )
-from models import db, User, Task, jwt
+from models import db, User, Task
 from flask_cors import CORS
 import random
 # from werkzeug.urls import url_parse
