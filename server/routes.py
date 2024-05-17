@@ -118,6 +118,7 @@ def admin_login():
 # this route will provide the admin with a list of users, 
 # the tasks assigned to each user, and the assignment times.
 @app.route('/api/admin/users-tasks', methods=['GET'])
+@jwt_required()
 # @login_required  # ensure this is accessible only by authenticated admins
 def admin_users_tasks():
     users_tasks = User.query.all()  # fetch all users and their tasks
@@ -135,6 +136,7 @@ def admin_users_tasks():
 
 # this route will allow admins to see tasks in the pool of assignable tasks.
 @app.route('/api/admin/tasks', methods=['GET'])
+@jwt_required()
 # @login_required  # ensure this is accessible only by authenticated admins for POST requests
 def manage_tasks():
 # view list of all tasks and their description and which user it is assigned to (if assigned to any)
@@ -158,6 +160,7 @@ def manage_tasks():
 
 # add tasks to the pool of assignable tasks from admin page
 @app.route('/api/admin/add-task', methods=['POST'])
+@jwt_required()
 # @login_required  # ensure this is accessible only by authenticated admins for POST requests
 def add_task():
 # add task according to form
@@ -169,6 +172,7 @@ def add_task():
 
 # delete tasks from the pool of assignable tasks from admin page
 @app.route('/api/admin/delete-task', methods=['POST'])
+@jwt_required()
 # @login_required  # ensure this is accessible only by authenticated admins for POST requests
 def delete_task():
 # delete task according to form (if task exists)
