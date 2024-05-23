@@ -5,6 +5,7 @@ import TextInput from "../inputs/TextInputs/TextInput.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PasswordTextInput from "../inputs/TextInputs/PasswordTextInput.jsx";
+import useLogin from "../../../api/hooks/useLogin.jsx";
 
 //Err validation functions
 const isRequired = (input) => input.length > 0 || "This is required.";
@@ -12,16 +13,18 @@ const isRequired = (input) => input.length > 0 || "This is required.";
 export default function LoginForm() {
   //form data
   const [state, setState] = React.useState({
-    name: "",
+    username: "",
     password: "",
   });
+
+  const { login, isLoading, error } = useLogin();
 
   //error messages; input name : message
   const [errMessages, setErrMessages] = useState({});
 
   //error validation functions
   const errFunctions = {
-    name: [isRequired],
+    username: [isRequired],
     password: [isRequired],
   };
 
@@ -35,10 +38,10 @@ export default function LoginForm() {
   };
 
   //submit handler
-  const handleOnSubmit = (evt) => {
+  const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
-    const { name, password } = state;
+    const { username, password } = state;
 
     //loop through error validation functions for each input
     //if the current input has an error, then we just display that error and move on to next input
@@ -59,9 +62,23 @@ export default function LoginForm() {
 
     setErrMessages(currErrMessages);
 
+    //if no errors from clientside validation
     if (Object.keys(currErrMessages).length === 0) {
-      alert(`You are logged in with name: ${name} and password: ${password}`);
-      navigate("/task");
+      await login(state);
+
+      //if errors
+      if (error) {
+        //display error
+        //in this case, the only error would be if the username and password aren't valid combo
+        //so we will display the error for both these inputs
+        setErrMessages({
+          username: error,
+          password: error,
+        });
+      } else {
+        //do navigation to home page here
+        alert("Login Successful");
+      }
     }
   };
 
@@ -70,10 +87,10 @@ export default function LoginForm() {
     <form onSubmit={handleOnSubmit} className="form login-container">
       <h1>Get Your Task</h1>
 
-      <NameInput
+      <UsernameInput
         state={state}
         onChange={handleChange}
-        error={errMessages.name}
+        error={errMessages.username}
       />
 
       <PasswordInput
@@ -93,15 +110,15 @@ export default function LoginForm() {
   );
 }
 
-const NameInput = ({ state, onChange, error }) => (
+const UsernameInput = ({ state, onChange, error }) => (
   <TextInput
     type="text"
-    placeholder={"Full Name"}
-    inputName={"name"}
-    value={state.name}
+    placeholder={"Username"}
+    inputName={"username"}
+    value={state.username}
     onChange={onChange}
     error={error}
-    id={"full-name-input"}
+    id={"username-input"}
   />
 );
 

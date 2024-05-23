@@ -10,7 +10,8 @@ import random
 from flask_jwt_extended import create_access_token, current_user, jwt_required, set_access_cookies, unset_jwt_cookies
 
 app = Blueprint('routes', __name__)
-cors = CORS()
+cors = CORS(app, supports_credentials=True)
+
 
 
 @app.route('/api/register', methods=['POST'])
@@ -59,7 +60,7 @@ def login():
         return response, 200
 
     # if authentication fails, return an error
-    return jsonify({'error': 'Invalid email or password'}), 401
+    return jsonify({'error': 'Invalid username or password'}), 401
 
 @app.route('/api/logout', methods=['POST'])
 @jwt_required()

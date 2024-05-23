@@ -4,6 +4,7 @@ import "./SignUpForm.css";
 import TextInput from "../inputs/TextInputs/TextInput.jsx";
 import PasswordTextInput from "../inputs/TextInputs/PasswordTextInput.jsx";
 import { Link } from "react-router-dom";
+import { useSignup } from "../../../api/hooks/useSignup.jsx";
 
 //Err validation functions
 const isRequired = (input) => input.length > 0 || "This is required.";
@@ -19,9 +20,12 @@ function SignUpForm() {
     first_name: "",
     last_name: "",
     email: "",
+    username: "",
     password: "",
     confirm_password: "",
   });
+
+  const { signup, errors, isLoading } = useSignup();
 
   //error messages; input name : message
   const [errMessages, setErrMessages] = useState({});
@@ -31,6 +35,7 @@ function SignUpForm() {
     first_name: [isRequired],
     last_name: [isRequired],
     email: [isRequired, isEmail],
+    username: [isRequired],
     password: [
       isRequired,
       isValidPassword,
@@ -55,7 +60,7 @@ function SignUpForm() {
   };
 
   //submit handler
-  const handleOnSubmit = (evt) => {
+  const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
     //extract form data
@@ -80,10 +85,18 @@ function SignUpForm() {
 
     setErrMessages(currErrMessages);
 
+    //if no errors on client side, send call to backend to sign up
     if (Object.keys(currErrMessages).length === 0) {
-      alert(
-        `You signed up with \nFirst Name: ${first_name} \nLast Name: ${last_name} \nEmail: ${email} \nPassword: ${password} \nConfirm Password: ${confirm_password}`
-      );
+      await signup(state);
+
+      //if errors
+      if (errors && errors.length > 0) {
+        //for now at least the errors are one array with one error
+        setErrMessages(errors[0]);
+      } else {
+        //navigate to login page
+        alert("go login");
+      }
     }
   };
 
@@ -114,6 +127,11 @@ function SignUpForm() {
         state={state}
         onChange={handleChange}
         error={errMessages.email}
+      />
+      <UsernameInput
+        state={state}
+        onChange={handleChange}
+        error={errMessages.username}
       />
       <PasswordInput
         state={state}
@@ -155,7 +173,17 @@ const LastNameInput = ({ state, onChange, error }) => (
     id={"last-name-input"}
   />
 );
-
+const UsernameInput = ({ state, onChange, error }) => (
+  <TextInput
+    type="text"
+    placeholder={"Username"}
+    inputName={"username"}
+    value={state.username}
+    onChange={onChange}
+    error={error}
+    id={"username-input"}
+  />
+);
 const EmailInput = ({ state, onChange, error }) => (
   <TextInput
     type="email"

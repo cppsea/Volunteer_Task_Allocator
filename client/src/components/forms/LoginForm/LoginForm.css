@@ -2,6 +2,7 @@
   border: 1px solid var(--login-btn-background);
   background-color: var(--login-btn-background);
   color: var(--login-btn-text);
+  margin-top: 10px;
 }
 
 
