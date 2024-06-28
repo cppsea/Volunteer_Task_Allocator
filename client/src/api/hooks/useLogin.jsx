@@ -18,11 +18,13 @@ export default function useLogin() {
       });
       //update auth context
       dispatch({ type: "LOGIN", payload: response.data.user });
-      setIsLoading(false);
+      //save to local stoarge
+      localStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
-      setIsLoading(false);
       setError(error.response.data.error);
       console.log(error.response.data.error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

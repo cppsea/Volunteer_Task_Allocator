@@ -26,9 +26,8 @@ export default function TaskPage() {
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        gap: "20px",
-        width: "100vw",
+        alignItems:"center",
+        gap:"20px"
       }}
     >
       <h1 className="page-title">Tasks</h1>
