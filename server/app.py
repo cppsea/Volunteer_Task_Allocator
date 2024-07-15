@@ -44,7 +44,6 @@ app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 
-
 with app.app_context():
     db.init_app(app)
     jwt.init_app(app)
